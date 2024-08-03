@@ -1,0 +1,24 @@
+version: '1'
+
+services:
+  mysql:
+    image: mariadb
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: 123456
+      MARIADB_DATABASE: springdb
+      MARIADB_USER: santgtd
+      MARIADB_PASSWORD: 123456
+    # volumes:
+    #   - mariadb_volumes:/var/lib/mysql
+    networks:
+      - mariadb_network
+    ports:
+      - 3307:3306
+
+volumes:
+  mariadb_volumes:
+
+
+networks:
+  mariadb_network:
