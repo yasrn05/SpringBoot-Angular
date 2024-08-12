@@ -43,8 +43,8 @@
 
         FOREIGN KEY (user_id) REFERENCES users(id)
     );
---CREATE TABLE cartegory, danh mục sản phẩm
-    CREATE TABLE cartegories(
+--CREATE TABLE category, danh mục sản phẩm
+    CREATE TABLE categories(
         id INT PRIMARY KEY AUTO_INCREMENT,
         name VARCHAR(100) NOT NULL DEFAULT '' COMMENT 'Tên danh mục'
     );
@@ -57,9 +57,19 @@
         description LONGTEXT DEFAULT '',
         created_at DATETIME,
         updated_at DATETIME,
-        cartegory_id INT,
+        category_id INT,
 
-        FOREIGN KEY (cartegory_id) REFERENCES cartegories(id)
+    );
+-- CREATE TABLE product_images, chứa url ảnh của sản phẩm
+    CREATE TABLE product_images(
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        product_id INT,
+        image_url VARCHAR(300),
+
+        FOREIGN KEY (product_id) REFERENCES products(id),
+        CONSTRAINT fk_product_images_product_id
+            FOREIGN KEY (product_id) 
+            REFERENCES products(id) ON DELETE CASCADE
     );
 --CREATE TABLE orders, đơn  hàng
     CREATE TABLE orders(
