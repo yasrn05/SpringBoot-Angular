@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 // @Validated
 public class CategoryController {
     // Hiển thị tất cả các category
-    @GetMapping("") // http://localhost:8069/api/v1/categories?page=1&limit=0
+    @GetMapping("") // http://localhost:8888/api/v1/categories?page=1&limit=0
     public ResponseEntity<String> getAllCategories(
             @RequestParam("page") int page,
             @RequestParam("limit") int limit) {
