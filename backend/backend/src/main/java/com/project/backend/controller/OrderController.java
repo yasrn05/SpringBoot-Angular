@@ -42,7 +42,7 @@ public class OrderController {
     @GetMapping("/{user_id}")
     // Get http://localhost:8888/api/v1/orders/23
     public ResponseEntity<?> getOrders(
-            @Valid @PathVariable Long user_id) {
+            @Valid @PathVariable("user_id") Long userId) {
         try {
             return ResponseEntity.ok("Danh sách order của user bằng user_id");
         } catch (Exception error) {
@@ -54,14 +54,14 @@ public class OrderController {
     // Put http://localhost:8888/api/v1/orders/1
     // Người quản trị
     public ResponseEntity<?> uploadOrder(
-            @Valid @PathVariable Long order_id,
+            @Valid @PathVariable("order_id") Long orderId,
             @Valid @RequestBody OrderDTO orderDTO) {
         return ResponseEntity.ok("Update order");
     }
 
     @DeleteMapping("/{order_id}")
     public ResponseEntity<String> deleteOrder(
-            @Valid @PathVariable Long order_id) {
+            @Valid @PathVariable("order_id") Long orderId) {
         // Xóa mềm -> cập nhật active = False
         return ResponseEntity.ok("Order deleted successfully");
     }
