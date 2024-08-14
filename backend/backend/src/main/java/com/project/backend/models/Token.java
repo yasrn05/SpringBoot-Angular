@@ -1,5 +1,7 @@
 package com.project.backend.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,17 +18,29 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product_images")
-public class ProductImage {
+@Table(name = "tokens")
+public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @Column(name = "token", length = 255)
+    private String token;
 
-    @Column(name = "image_url", length = 300)
-    private String imageUrl;
+    @Column(name = "token_type", length = 50)
+    private String tokenType;
+
+    @Column(name = "expiration_date")
+    private LocalDateTime expirationDate;
+
+    @Column(name = "revoked")
+    private boolean revoked;
+
+    @Column(name = "expired")
+    private boolean expired;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
