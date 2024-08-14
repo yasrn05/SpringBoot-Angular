@@ -42,7 +42,7 @@ public class OrderController {
     @GetMapping("/{user_id}")
     // Get http://localhost:8888/api/v1/orders/23
     public ResponseEntity<?> getOrders(
-            @Valid @PathVariable Long userId) {
+            @Valid @PathVariable Long user_id) {
         try {
             return ResponseEntity.ok("Danh sách order của user bằng user_id");
         } catch (Exception error) {
