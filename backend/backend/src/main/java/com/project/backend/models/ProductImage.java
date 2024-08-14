@@ -8,28 +8,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
-@Table(name = "products")
-public class Product extends BaseEntity {
+@Data
+@Table(name = "product_images")
+public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 350)
-    private String name;
-
-    @Column(name = "price")
-    private Float price;
-
-    @Column(name = "thumnail", length = 300)
-    private String thumnail;
-
-    @Column(name = "description")
-    private String description;
-
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @Column(name = "image_url", length = 300)
+    private String imageUrl;
 }
