@@ -30,7 +30,7 @@ import com.project.backend.dtos.ProductDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/v1/products")
+@RequestMapping("${api.prefix}products")
 public class ProductController {
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     // Post http://localhost:8888/v1/api/products
