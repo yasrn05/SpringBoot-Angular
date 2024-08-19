@@ -3,7 +3,9 @@ package com.project.backend.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.project.backend.dtos.CategoryDTO;
 import com.project.backend.models.Category;
 import com.project.backend.repositories.CategoryRepository;
 
@@ -16,8 +18,12 @@ public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
+    public Category createCategory(CategoryDTO categoryDTO) {
+        Category newCategory = Category
+                .builder()
+                .name(categoryDTO.getName())
+                .build();
+        return categoryRepository.save(newCategory);
     }
 
     @Override
@@ -38,9 +44,10 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category updateCategory(long categoryId, Category category) {
+    public Category updateCategory(long categoryId, CategoryDTO categoryDTO) {
         Category existingCategory = getCategoryById(categoryId);
-        existingCategory.setName(category.getName());
+        existingCategory.setName(categoryDTO.getName());
+        categoryRepository.save(existingCategory);
         return existingCategory;
     }
 
