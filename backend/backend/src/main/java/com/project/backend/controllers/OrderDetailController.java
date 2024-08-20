@@ -1,4 +1,4 @@
-package com.project.backend.controller;
+package com.project.backend.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

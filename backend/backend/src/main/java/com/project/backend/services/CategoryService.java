@@ -3,7 +3,6 @@ package com.project.backend.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.project.backend.dtos.CategoryDTO;
 import com.project.backend.models.Category;
