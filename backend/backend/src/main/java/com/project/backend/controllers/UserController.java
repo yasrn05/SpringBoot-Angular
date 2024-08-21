@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.dtos.UserDTO;
 import com.project.backend.dtos.UserLoginDTO;
+import com.project.backend.services.UserService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("${api.prefix}/users")
+@RequiredArgsConstructor
 public class UserController {
+    private final UserService userService;
+
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
             BindingResult result) {
@@ -32,6 +37,7 @@ public class UserController {
             if (!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
                 return ResponseEntity.badRequest().body("Retype password does not match");
             }
+            userService.createUser(userDTO);
             return ResponseEntity.ok("Register successfully");
         } catch (Exception error) {
             return ResponseEntity.badRequest().body(error.getMessage());
@@ -41,7 +47,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
         // Kiểm tra thông tin đăng nhập và sinh ra token
+        String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
         // Trả về token trong response
-        return ResponseEntity.ok("Token");
+        return ResponseEntity.ok(token);
     }
 }
