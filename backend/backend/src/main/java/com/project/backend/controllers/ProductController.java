@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+// import com.github.javafaker.Faker;
 import com.project.backend.dtos.ProductDTO;
 import com.project.backend.dtos.ProductImageDTO;
 import com.project.backend.models.Product;
@@ -159,4 +160,28 @@ public class ProductController {
     public ResponseEntity<String> deleteProduct(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body("Prodcut deletes successfully");
     }
+
+    // @PostMapping("/generateFakeProducts")
+    // public ResponseEntity<String> generateFakeProducts() {
+    // Faker faker = new Faker();
+    // for (int i = 0; i < 100; i++) {
+    // String productName = faker.commerce().productName();
+    // if (productService.existsByName(productName)) {
+    // continue;
+    // }
+    // ProductDTO productDTO = ProductDTO.builder()
+    // .name(productName)
+    // .price((float) faker.number().numberBetween(10, 99999))
+    // .description(faker.lorem().sentence())
+    // .thumbnail("")
+    // .categoryId((long) faker.number().numberBetween(1, 3))
+    // .build();
+    // try {
+    // productService.createProduct(productDTO);
+    // } catch (Exception e) {
+    // return ResponseEntity.badRequest().body(e.getMessage());
+    // }
+    // }
+    // return ResponseEntity.ok("Fake Product created successfully!");
+    // }
 }
