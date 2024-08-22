@@ -43,7 +43,7 @@ public class CategoryController {
             return ResponseEntity.badRequest().body(errorMessages);
         }
         categoryService.createCategory(categoryDTO);
-        return ResponseEntity.ok("Insert category successfully");
+        return ResponseEntity.ok("Create category successfully");
     }
 
     // Hiển thị tất cả các category
