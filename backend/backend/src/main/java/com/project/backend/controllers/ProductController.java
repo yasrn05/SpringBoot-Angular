@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,21 +29,22 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.backend.dtos.ProductDTO;
 import com.project.backend.dtos.ProductImageDTO;
 import com.project.backend.models.Product;
+import com.project.backend.models.ProductImage;
 import com.project.backend.services.ProductService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("${api.prefix}products")
+@RequestMapping("${api.prefix}/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping("")
     // Post http://localhost:8888/v1/api/products
     public ResponseEntity<?> createProduct(
-            @Valid @ModelAttribute ProductDTO productDTO,
+            @Valid @RequestBody ProductDTO productDTO,
             BindingResult result) {
         try {
             if (result.hasErrors()) {
@@ -53,8 +55,20 @@ public class ProductController {
                 return ResponseEntity.badRequest().body(errorMessages);
             }
             Product newProduct = productService.createProduct(productDTO);
-            List<MultipartFile> files = productDTO.getFiles();
+            return ResponseEntity.ok(newProduct);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadImages(
+            @PathVariable("id") Long productId,
+            @ModelAttribute("files") List<MultipartFile> files) {
+        try {
+            Product existingProduct = productService.getProductById(productId);
             files = files == null ? new ArrayList<MultipartFile>() : files;
+            List<ProductImage> productImages = new ArrayList<>();
             for (MultipartFile file : files) {
                 if (file.getSize() == 0) {
                     continue;
@@ -72,15 +86,16 @@ public class ProductController {
                 // Lưu file và cập nhật thumnail trong DTO
                 String filename = storeFile(file); // Thay thế hàm này với code để lưu file
                 // Lưu vào đối tượng product trong Database
-                productService.createProductImage(
-                        newProduct.getId(),
+                ProductImage productImage = productService.createProductImage(
+                        existingProduct.getId(),
                         ProductImageDTO.builder()
                                 .imageUrl(filename)
                                 .build());
+                productImages.add(productImage);
             }
-            return ResponseEntity.ok("Prodcut created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok().body(productImages);
+        } catch (Exception error) {
+            return ResponseEntity.badRequest().body(error.getMessage());
         }
     }
 

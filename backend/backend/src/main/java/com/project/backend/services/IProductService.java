@@ -9,7 +9,7 @@ import com.project.backend.models.Product;
 import com.project.backend.models.ProductImage;
 
 public interface IProductService {
-    public Product createProduct(ProductDTO productDTO) throws Exception;
+    Product createProduct(ProductDTO productDTO) throws Exception;
 
     Product getProductById(long id) throws Exception;
 
