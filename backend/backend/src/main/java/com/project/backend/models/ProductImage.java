@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "product_images")
 @Builder
 public class ProductImage {
+    public static final int MAXIMUM_IMAGES_PER_PRODUCT = 5;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
