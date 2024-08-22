@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -152,13 +153,33 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getProductById(@PathVariable("id") String productId) {
-        return ResponseEntity.ok("Product with ID: " + productId);
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long productId) {
+        try {
+            Product existingProduct = productService.getProductById(productId);
+            return ResponseEntity.ok(ProductResponse.formProduct(existingProduct));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable("id") Long productId, @RequestBody ProductDTO productDTO) {
+        try {
+            Product updateProduct = productService.updateProduct(productId, productDTO);
+            return ResponseEntity.ok(updateProduct);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable long id) {
-        return ResponseEntity.status(HttpStatus.OK).body("Prodcut deletes successfully");
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long productId) {
+        try {
+            productService.deleteProduct(productId);
+            return ResponseEntity.ok(String.format("Product with id = %d deleted successfully", productId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     // @PostMapping("/generateFakeProducts")
