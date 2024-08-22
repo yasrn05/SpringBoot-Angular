@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +33,8 @@ import com.project.backend.dtos.ProductDTO;
 import com.project.backend.dtos.ProductImageDTO;
 import com.project.backend.models.Product;
 import com.project.backend.models.ProductImage;
+import com.project.backend.responses.ProductListResponse;
+import com.project.backend.responses.ProductResponse;
 import com.project.backend.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -129,10 +134,20 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<String> getProducts(
+    public ResponseEntity<ProductListResponse> getProducts(
             @RequestParam("page") int page,
             @RequestParam("limit") int limit) {
-        return ResponseEntity.ok("getProducts here");
+        // Tạo pageRequest
+        PageRequest pageRequest = PageRequest.of(page - 1, limit, // Page từ 0
+                Sort.by("createdAt").descending());
+        Page<ProductResponse> productsPage = productService.getAllProducts(pageRequest);
+        // Lấy ra tổng số trang
+        int totalPages = productsPage.getTotalPages();
+        List<ProductResponse> products = productsPage.getContent();
+        return ResponseEntity.ok(ProductListResponse.builder()
+                .totalPage(totalPages)
+                .products(products)
+                .build());
     }
 
     @GetMapping("/{id}")

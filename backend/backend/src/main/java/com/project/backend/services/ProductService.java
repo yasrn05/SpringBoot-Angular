@@ -16,6 +16,7 @@ import com.project.backend.models.ProductImage;
 import com.project.backend.repositories.CategoryRepository;
 import com.project.backend.repositories.ProductImageRepository;
 import com.project.backend.repositories.ProductRepository;
+import com.project.backend.responses.ProductResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,9 +49,20 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(PageRequest pageRequest) {
+    public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
         // Danh sách sản phâm theo page và limit
-        return productRepository.findAll(pageRequest);
+        return productRepository.findAll(pageRequest).map(product -> {
+            ProductResponse productResponse = ProductResponse.builder()
+                    .name(product.getName())
+                    .price(product.getPrice())
+                    .thumbnail(product.getThumbnail())
+                    .description(product.getDescription())
+                    .categoryId(product.getCategory().getId())
+                    .build();
+            productResponse.setCreatedAt(product.getCreatedAt());
+            productResponse.setUpdatedAt(product.getUpdatedAt());
+            return productResponse;
+        });
     }
 
     @Override
