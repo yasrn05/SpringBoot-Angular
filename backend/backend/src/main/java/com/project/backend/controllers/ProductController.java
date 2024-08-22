@@ -26,12 +26,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.backend.dtos.ProductDTO;
+import com.project.backend.dtos.ProductImageDTO;
+import com.project.backend.models.Product;
+import com.project.backend.services.ProductService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("${api.prefix}products")
+@RequiredArgsConstructor
 public class ProductController {
+    private final ProductService productService;
+
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     // Post http://localhost:8888/v1/api/products
     public ResponseEntity<?> createProduct(
@@ -45,6 +52,7 @@ public class ProductController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
+            Product newProduct = productService.createProduct(productDTO);
             List<MultipartFile> files = productDTO.getFiles();
             files = files == null ? new ArrayList<MultipartFile>() : files;
             for (MultipartFile file : files) {
@@ -64,7 +72,11 @@ public class ProductController {
                 // Lưu file và cập nhật thumnail trong DTO
                 String filename = storeFile(file); // Thay thế hàm này với code để lưu file
                 // Lưu vào đối tượng product trong Database
-                // Lưu vào bằng product_images
+                productService.createProductImage(
+                        newProduct.getId(),
+                        ProductImageDTO.builder()
+                                .imageUrl(filename)
+                                .build());
             }
             return ResponseEntity.ok("Prodcut created successfully");
         } catch (Exception e) {

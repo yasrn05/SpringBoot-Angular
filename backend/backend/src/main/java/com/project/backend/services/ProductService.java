@@ -1,14 +1,20 @@
 package com.project.backend.services;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.project.backend.dtos.ProductDTO;
+import com.project.backend.dtos.ProductImageDTO;
 import com.project.backend.exceptions.DataNotFoundException;
+import com.project.backend.exceptions.InvalidParamException;
 import com.project.backend.models.Category;
 import com.project.backend.models.Product;
+import com.project.backend.models.ProductImage;
 import com.project.backend.repositories.CategoryRepository;
+import com.project.backend.repositories.ProductImageRepository;
 import com.project.backend.repositories.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,9 +24,10 @@ import lombok.RequiredArgsConstructor;
 public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductImageRepository productImageRepository;
 
     @Override
-    public Product createProduct(ProductDTO productDTO) throws DataNotFoundException {
+    public Product createProduct(ProductDTO productDTO) throws Exception {
         Category existingCategory = categoryRepository
                 .findById(productDTO.getCategoryId())
                 .orElseThrow(
@@ -35,7 +42,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product getProductById(long productId) throws DataNotFoundException {
+    public Product getProductById(long productId) throws Exception {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new DataNotFoundException("Cannot found product with id: " + productId));
     }
@@ -47,7 +54,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product updateProduct(long productId, ProductDTO productDTO) throws DataNotFoundException {
+    public Product updateProduct(long productId, ProductDTO productDTO) throws Exception {
         Product existingProduct = getProductById(productId);
         if (existingProduct != null) {
             // Coppy các thuộc tính từ DTO product
@@ -67,13 +74,32 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteProduct(long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'deleteProduct'");
+    public void deleteProduct(long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        optionalProduct.ifPresent(productRepository::delete);
     }
 
     @Override
     public boolean existsByName(String name) {
-        throw new UnsupportedOperationException("Unimplemented method 'existsByName'");
+        return productRepository.existsByName(name);
     }
 
+    @Override
+    public ProductImage createProductImage(long productId, ProductImageDTO productImageDTO)
+            throws Exception {
+        Product existingProduct = productRepository
+                .findById(productImageDTO.getProductId())
+                .orElseThrow(() -> new DataNotFoundException(
+                        "Cannot find product with id: " + productImageDTO.getProductId()));
+        ProductImage newProductImage = ProductImage.builder()
+                .product(existingProduct)
+                .imageUrl(productImageDTO.getImageUrl())
+                .build();
+        // Check create quá 5 ảnh
+        int size = productImageRepository.findByProductId(productId).size();
+        if (size >= 5) {
+            throw new InvalidParamException("Number of image must be <= 5");
+        }
+        return productImageRepository.save(newProductImage);
+    }
 }

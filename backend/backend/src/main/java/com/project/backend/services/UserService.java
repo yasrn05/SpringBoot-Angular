@@ -19,7 +19,7 @@ public class UserService implements IUserService {
     private final RoleRepository roleRepository;
 
     @Override
-    public User createUser(UserDTO userDTO) throws DataNotFoundException {
+    public User createUser(UserDTO userDTO) throws Exception {
         String phoneNumber = userDTO.getPhoneNumber();
         // Check phone tồn tại hay chưa
         if (userRepository.existsByPhoneNumber(phoneNumber)) {
