@@ -1,5 +1,7 @@
 package com.project.backend.dtos;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Min;
@@ -40,6 +42,9 @@ public class OrderDTO {
 
     @JsonProperty("shipping_address")
     private String shippingAddress;
+
+    @JsonProperty("shipping_date")
+    private Date shippingDate;
 
     @JsonProperty("payment_method")
     private String paymenMethod;
