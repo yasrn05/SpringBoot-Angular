@@ -14,7 +14,6 @@ import com.project.backend.models.OrderStatus;
 import com.project.backend.models.User;
 import com.project.backend.repositories.OrderRepository;
 import com.project.backend.repositories.UserRepository;
-import com.project.backend.responses.OrderResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +25,7 @@ public class OrderService implements IOrderService {
     private final ModelMapper modelMapper;
 
     @Override
-    public OrderResponse createOrder(OrderDTO orderDTO) throws Exception {
+    public Order createOrder(OrderDTO orderDTO) throws Exception {
         // Check userid có tồn tại hay không
         User user = userRepository.findById(orderDTO.getUserId())
                 .orElseThrow(() -> new DataNotFoundException("Cannot find user with id: " + orderDTO.getUserId()));
@@ -46,19 +45,20 @@ public class OrderService implements IOrderService {
         if (shippingDate.isBefore(LocalDate.now())) {
             throw new DataNotFoundException("Date must be at least today!");
         }
+        order.setShippingDate(shippingDate);
         order.setActivate(true);
         orderReposistory.save(order);
-        return modelMapper.map(order, OrderResponse.class);
+        return order;
     }
 
     @Override
-    public OrderResponse getOrder(Long id) {
+    public Order getOrder(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOrder'");
     }
 
     @Override
-    public OrderResponse updateOrder(Long id, OrderDTO orderDTO) {
+    public Order updateOrder(Long id, OrderDTO orderDTO) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateOrder'");
     }
@@ -70,7 +70,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<OrderResponse> getAllOrder(Long userId) {
+    public List<Order> getAllOrder(Long userId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllOrder'");
     }

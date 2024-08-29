@@ -47,5 +47,5 @@ public class OrderDTO {
     private LocalDate shippingDate;
 
     @JsonProperty("payment_method")
-    private String paymenMethod;
+    private String paymentMethod;
 }

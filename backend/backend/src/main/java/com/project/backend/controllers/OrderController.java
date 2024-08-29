@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.dtos.OrderDTO;
-import com.project.backend.responses.OrderResponse;
+import com.project.backend.models.Order;
 import com.project.backend.services.OrderService;
 
 import jakarta.validation.Valid;
@@ -39,7 +39,7 @@ public class OrderController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessage);
             }
-            OrderResponse orderResponse = orderService.createOrder(orderDTO);
+            Order orderResponse = orderService.createOrder(orderDTO);
             return ResponseEntity.ok(orderResponse);
         } catch (Exception error) {
             return ResponseEntity.badRequest().body(error.getMessage());
