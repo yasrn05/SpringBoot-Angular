@@ -1,7 +1,6 @@
 package com.project.backend.dtos;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
