@@ -1,5 +1,6 @@
 package com.project.backend.services;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -40,14 +41,14 @@ public class OrderService implements IOrderService {
         order.setUser(user);
         order.setOrderDate(new Date()); // This time
         order.setStatus(OrderStatus.PENDING);
-        // Kiểm tra shipping date phải lớn hơn hôm nay
-        Date shippingDate = orderDTO.getShippingDate();
-        if (shippingDate == null || shippingDate.before(new Date())) {
+        // Kiểm tra shipping date
+        LocalDate shippingDate = orderDTO.getShippingDate() == null ? LocalDate.now() : orderDTO.getShippingDate();
+        if (shippingDate.isBefore(LocalDate.now())) {
             throw new DataNotFoundException("Date must be at least today!");
         }
-        order.setActive(true);
+        order.setActivate(true);
         orderReposistory.save(order);
-        return null;
+        return modelMapper.map(order, OrderResponse.class);
     }
 
     @Override

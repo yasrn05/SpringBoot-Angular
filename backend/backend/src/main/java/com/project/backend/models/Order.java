@@ -70,6 +70,6 @@ public class Order {
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "active")
-    private Boolean active; // Xóa mềm, thuộc quyền admin
+    @Column(name = "activate")
+    private Boolean activate; // Xóa mềm, thuộc quyền admin
 }
