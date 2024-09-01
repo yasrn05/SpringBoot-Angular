@@ -53,7 +53,7 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order getOrder(Long id) {
-        throw new UnsupportedOperationException("Unimplemented method 'getOrder'");
+        return orderReposistory.findById(id).orElse(null);
     }
 
     @Override
