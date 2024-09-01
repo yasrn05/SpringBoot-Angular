@@ -10,7 +10,7 @@ public interface IOrderService {
 
     Order getOrder(Long id);
 
-    Order updateOrder(Long id, OrderDTO orderDTO);
+    Order updateOrder(Long id, OrderDTO orderDTO) throws Exception;
 
     void deletedOrder(Long id);
 

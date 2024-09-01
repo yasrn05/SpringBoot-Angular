@@ -57,9 +57,18 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order updateOrder(Long id, OrderDTO orderDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateOrder'");
+    public Order updateOrder(Long id, OrderDTO orderDTO) throws Exception {
+        Order existingOrder = orderReposistory.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Cannot find order with id: " + id));
+        User existingUser = userRepository.findById(orderDTO.getUserId())
+                .orElseThrow(() -> new DataNotFoundException("Cannot find order with id: " + orderDTO.getUserId()));
+        // Tạo luồng ánh xạ
+        modelMapper.typeMap(OrderDTO.class, Order.class)
+                .addMappings(mapper -> mapper.skip(Order::setId));
+        // Cập nhật các trường
+        modelMapper.map(orderDTO, existingOrder);
+        existingOrder.setUser(existingUser);
+        return orderReposistory.save(existingOrder);
     }
 
     @Override

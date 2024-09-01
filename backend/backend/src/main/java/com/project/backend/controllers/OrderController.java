@@ -76,7 +76,12 @@ public class OrderController {
     public ResponseEntity<?> uploadOrder(
             @Valid @PathVariable("order_id") Long orderId,
             @Valid @RequestBody OrderDTO orderDTO) {
-        return ResponseEntity.ok("Update order");
+        try {
+            Order order = orderService.updateOrder(orderId, orderDTO);
+            return ResponseEntity.ok(order);
+        } catch (Exception error) {
+            return ResponseEntity.badRequest().body(error.getMessage());
+        }
     }
 
     @DeleteMapping("/{order_id}")
