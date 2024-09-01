@@ -46,12 +46,25 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/{user_id}")
-    // Get http://localhost:8888/api/v1/orders/23
+    @GetMapping("/user/{user_id}")
+    // Get http://localhost:8888/api/v1/orders/user/23
     public ResponseEntity<?> getOrders(
             @Valid @PathVariable("user_id") Long userId) {
         try {
-            return ResponseEntity.ok("Danh sách order của user bằng user_id");
+            List<Order> orders = orderService.findByUserId(userId);
+            return ResponseEntity.ok(orders);
+        } catch (Exception error) {
+            return ResponseEntity.badRequest().body(error.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    // Get http://localhost:8888/api/v1/orders/23
+    public ResponseEntity<?> getOrder(
+            @Valid @PathVariable("id") Long orderId) {
+        try {
+            Order existingOrder = orderService.getOrder(orderId);
+            return ResponseEntity.ok(existingOrder);
         } catch (Exception error) {
             return ResponseEntity.badRequest().body(error.getMessage());
         }

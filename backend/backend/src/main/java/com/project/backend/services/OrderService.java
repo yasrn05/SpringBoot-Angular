@@ -53,7 +53,6 @@ public class OrderService implements IOrderService {
 
     @Override
     public Order getOrder(Long id) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOrder'");
     }
 
@@ -70,9 +69,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> getAllOrder(Long userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllOrder'");
+    public List<Order> findByUserId(Long userId) {
+        return orderReposistory.findByUserId(userId);
     }
 
 }
