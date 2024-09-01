@@ -73,8 +73,12 @@ public class OrderService implements IOrderService {
 
     @Override
     public void deletedOrder(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletedOrder'");
+        Order order = orderReposistory.findById(id).orElse(null);
+        // soft-delete order
+        if (order != null) {
+            order.setActivate(false);
+            orderReposistory.save(order);
+        }
     }
 
     @Override
