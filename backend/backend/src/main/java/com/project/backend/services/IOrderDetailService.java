@@ -8,11 +8,11 @@ import com.project.backend.models.OrderDetail;
 public interface IOrderDetailService {
     OrderDetail createOrderDetail(OrderDetailDTO orderDetailDTO) throws Exception;
 
-    OrderDetail getOrderDetail(Long id);
+    OrderDetail getOrderDetail(Long id) throws Exception;
 
     OrderDetail updateOrderDetail(Long id, OrderDetailDTO newOrderDetailData);
 
     void deletedOrderDetail(Long id);
 
-    List<OrderDetail> getOrderDetails(Long orderId);
+    List<OrderDetail> findByOrderId(Long orderId);
 }

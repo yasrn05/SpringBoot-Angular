@@ -43,9 +43,9 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    public OrderDetail getOrderDetail(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOrderDetail'");
+    public OrderDetail getOrderDetail(Long id) throws Exception {
+        return orderDetailRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Cannot find oderdetail with id: " + id));
     }
 
     @Override
@@ -56,14 +56,12 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public void deletedOrderDetail(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletedOrderDetail'");
+        orderDetailRepository.deleteById(id);
     }
 
     @Override
-    public List<OrderDetail> getOrderDetails(Long orderId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOrderDetails'");
+    public List<OrderDetail> findByOrderId(Long orderId) {
+        return orderDetailRepository.findByOrderId(orderId);
     }
 
 }

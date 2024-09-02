@@ -1,5 +1,7 @@
 package com.project.backend.controllers;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,15 +39,17 @@ public class OrderDetailController {
 
     @GetMapping("/{order_id}")
     public ResponseEntity<?> getOrderDetail(
-            @Valid @PathVariable("order_id") Long id) {
-        return ResponseEntity.ok("Get Order Detail with id: " + id);
+            @Valid @PathVariable("order_id") Long id) throws Exception {
+        OrderDetail orderDetail = orderDetailService.getOrderDetail(id);
+        return ResponseEntity.ok(orderDetail);
     }
 
     // Lấy danh sách orderdetail của một order
     @GetMapping("/order/{order_id}")
     public ResponseEntity<?> getOrderDetials(
             @Valid @PathVariable("order_id") Long orderId) {
-        return ResponseEntity.ok("Get order details with orderId = " + orderId);
+        List<OrderDetail> orderDetails = orderDetailService.findByOrderId(orderId);
+        return ResponseEntity.ok(orderDetails);
     }
 
     // Sửa orderdetail
