@@ -11,17 +11,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.dtos.OrderDetailDTO;
+import com.project.backend.models.OrderDetail;
+import com.project.backend.services.OrderDetailService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("${api.prefix}/order_details")
+@RequiredArgsConstructor
 public class OrderDetailController {
+    private final OrderDetailService orderDetailService;
+
     // Thêm mới order detail
     @PostMapping
     public ResponseEntity<?> createOrderDetail(
-            @Valid @RequestBody OrderDetailDTO newOrderDetail) {
-        return ResponseEntity.ok("Create Order Detail");
+            @Valid @RequestBody OrderDetailDTO orderDetailDTO) {
+        try {
+            OrderDetail orderDetail = orderDetailService.createOrderDetail(orderDetailDTO);
+            return ResponseEntity.ok().body(orderDetail);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{order_id}")

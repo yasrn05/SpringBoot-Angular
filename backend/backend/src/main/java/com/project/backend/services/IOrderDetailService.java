@@ -6,7 +6,7 @@ import com.project.backend.dtos.OrderDetailDTO;
 import com.project.backend.models.OrderDetail;
 
 public interface IOrderDetailService {
-    OrderDetail CreateOrderDetail(OrderDetailDTO newDetailDTO);
+    OrderDetail createOrderDetail(OrderDetailDTO orderDetailDTO) throws Exception;
 
     OrderDetail getOrderDetail(Long id);
 

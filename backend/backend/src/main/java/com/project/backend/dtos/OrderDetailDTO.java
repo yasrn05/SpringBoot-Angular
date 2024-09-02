@@ -28,7 +28,7 @@ public class OrderDetailDTO {
 
     @JsonProperty("total_money")
     @Min(value = 0, message = "Total money must be >= 0")
-    private int totalMoney;
+    private float totalMoney;
 
     private String color;
 }
