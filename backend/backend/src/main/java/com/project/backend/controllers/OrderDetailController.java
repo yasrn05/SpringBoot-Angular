@@ -28,13 +28,9 @@ public class OrderDetailController {
     // Thêm mới order detail
     @PostMapping
     public ResponseEntity<?> createOrderDetail(
-            @Valid @RequestBody OrderDetailDTO orderDetailDTO) {
-        try {
-            OrderDetail orderDetail = orderDetailService.createOrderDetail(orderDetailDTO);
-            return ResponseEntity.ok().body(orderDetail);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+            @Valid @RequestBody OrderDetailDTO orderDetailDTO) throws Exception {
+        OrderDetail orderDetail = orderDetailService.createOrderDetail(orderDetailDTO);
+        return ResponseEntity.ok().body(orderDetail);
     }
 
     @GetMapping("/{order_id}")

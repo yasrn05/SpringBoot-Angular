@@ -40,7 +40,7 @@ public class UserService implements IUserService {
         newUser.setRole(role);
         // Kiểm tra nếu có AccountId thì không cần password
         if (userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0) {
-            String password = userDTO.getPassword();
+            // String password = userDTO.getPassword();
             // String encodedPassword = passwordEncoder.encode(password);
             // newUser.setPassword(encodePassword);
         }
