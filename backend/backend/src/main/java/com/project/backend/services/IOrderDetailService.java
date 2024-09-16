@@ -12,7 +12,7 @@ public interface IOrderDetailService {
 
     OrderDetail updateOrderDetail(Long id, OrderDetailDTO newOrderDetailData) throws Exception;
 
-    void deletedOrderDetail(Long id);
+    void deletedById(Long id);
 
     List<OrderDetail> findByOrderId(Long orderId);
 }

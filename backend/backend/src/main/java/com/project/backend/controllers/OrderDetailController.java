@@ -68,8 +68,9 @@ public class OrderDetailController {
     }
 
     @DeleteMapping("/{order_id}")
-    public ResponseEntity<Void> deleteOrderDetail(
+    public ResponseEntity<?> deleteOrderDetail(
             @Valid @PathVariable("order_id") Long orderId) {
-        return ResponseEntity.noContent().build();
+        orderDetailService.deletedById(orderId);
+        return ResponseEntity.ok().body("Delete Order Detail with id: " + orderId + " successfully");
     }
 }
