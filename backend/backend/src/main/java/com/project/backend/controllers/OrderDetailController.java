@@ -46,7 +46,11 @@ public class OrderDetailController {
     public ResponseEntity<?> getOrderDetials(
             @Valid @PathVariable("order_id") Long orderId) {
         List<OrderDetail> orderDetails = orderDetailService.findByOrderId(orderId);
-        return ResponseEntity.ok(orderDetails);
+        List<OrderDetailResponse> orderDetailResponses = orderDetails
+                .stream()
+                .map(OrderDetailResponse::fromOrderDetail)
+                .toList();
+        return ResponseEntity.ok(orderDetailResponses);
     }
 
     // Sửa orderdetail
