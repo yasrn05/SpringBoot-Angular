@@ -38,7 +38,7 @@ public class OrderDetailController {
     public ResponseEntity<?> getOrderDetail(
             @Valid @PathVariable("order_id") Long id) throws Exception {
         OrderDetail orderDetail = orderDetailService.getOrderDetail(id);
-        return ResponseEntity.ok(orderDetail);
+        return ResponseEntity.ok(OrderDetailResponse.fromOrderDetail(orderDetail));
     }
 
     // Lấy danh sách orderdetail của một order
