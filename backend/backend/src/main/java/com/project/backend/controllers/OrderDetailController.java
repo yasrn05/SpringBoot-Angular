@@ -57,8 +57,14 @@ public class OrderDetailController {
     @PutMapping("/{order_id}")
     public ResponseEntity<?> updateOrderDetail(
             @Valid @PathVariable("order_id") Long orderId,
-            @Valid @RequestBody OrderDetailDTO newOrderDetailData) {
-        return ResponseEntity.ok("Update orderdetail with id" + orderId + " , new data" + newOrderDetailData);
+            @Valid @RequestBody OrderDetailDTO orderDetailDTO) {
+        OrderDetail orderDetail;
+        try {
+            orderDetail = orderDetailService.updateOrderDetail(orderId, orderDetailDTO);
+            return ResponseEntity.ok().body(orderDetail);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{order_id}")

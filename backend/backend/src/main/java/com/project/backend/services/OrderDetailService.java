@@ -50,9 +50,23 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    public OrderDetail updateOrderDetail(Long id, OrderDetailDTO newOrderDetailData) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateOrderDetail'");
+    public OrderDetail updateOrderDetail(Long id, OrderDetailDTO orderDetailDTO) throws Exception {
+        // Check orderDetail
+        OrderDetail existingOrderDetail = orderDetailRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Cannot find OrderDetail with id: " + id));
+        Order existingOrder = orderRepository.findById(orderDetailDTO.getOrderId())
+                .orElseThrow(
+                        () -> new DataNotFoundException("Cannot find Order with id: " + orderDetailDTO.getOrderId()));
+        Product existingProduct = productRepository.findById(orderDetailDTO.getProductId())
+                .orElseThrow(() -> new DataNotFoundException(
+                        "Cannot find Prodcut with id: " + orderDetailDTO.getProductId()));
+        existingOrderDetail.setPrice(orderDetailDTO.getPrice());
+        existingOrderDetail.setNumberOfProducts(orderDetailDTO.getNumberOfProducts());
+        existingOrderDetail.setTotalMoney(orderDetailDTO.getTotalMoney());
+        existingOrderDetail.setColor(orderDetailDTO.getColor());
+        existingOrderDetail.setOrder(existingOrder);
+        existingOrderDetail.setProduct(existingProduct);
+        return orderDetailRepository.save(existingOrderDetail);
     }
 
     @Override
