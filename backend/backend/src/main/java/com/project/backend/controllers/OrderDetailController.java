@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.dtos.OrderDetailDTO;
 import com.project.backend.models.OrderDetail;
+import com.project.backend.responses.OrderDetailResponse;
 import com.project.backend.services.OrderDetailService;
 
 import jakarta.validation.Valid;
@@ -30,7 +31,7 @@ public class OrderDetailController {
     public ResponseEntity<?> createOrderDetail(
             @Valid @RequestBody OrderDetailDTO orderDetailDTO) throws Exception {
         OrderDetail orderDetail = orderDetailService.createOrderDetail(orderDetailDTO);
-        return ResponseEntity.ok().body(orderDetail);
+        return ResponseEntity.ok().body(OrderDetailResponse.fromOrderDetail(orderDetail));
     }
 
     @GetMapping("/{order_id}")

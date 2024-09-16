@@ -35,6 +35,7 @@ public class OrderDetailService implements IOrderDetailService {
         OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
                 .product(product)
+                .price(oderDetailDTO.getPrice())
                 .numberOfProducts(oderDetailDTO.getNumberOfProducts())
                 .totalMoney(oderDetailDTO.getTotalMoney())
                 .color(oderDetailDTO.getColor())
