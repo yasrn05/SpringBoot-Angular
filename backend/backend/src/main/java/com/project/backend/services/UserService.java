@@ -1,9 +1,15 @@
 package com.project.backend.services;
 
+import java.util.Optional;
+
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.backend.components.JwtTokenUtil;
 import com.project.backend.dtos.UserDTO;
 import com.project.backend.exceptions.DataNotFoundException;
 import com.project.backend.models.User;
@@ -19,6 +25,8 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public User createUser(UserDTO userDTO) throws Exception {
@@ -50,8 +58,24 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public String login(String phoneNumber, String password) {
-        // Nhả token key
-        return null;
+    public String login(String phoneNumber, String password) throws Exception {
+        Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
+        if (optionalUser.isEmpty()) {
+            throw new DataNotFoundException("Invalid phonenumber / password");
+        }
+        User existingUser = optionalUser.get();
+        // check password
+        if (existingUser.getFacebookAccountId() == 0 && existingUser.getGoogleAccountId() == 0) {
+            if (!passwordEncoder.matches(password, existingUser.getPassword())) {
+                throw new BadCredentialsException("Wrong phonenumber / password");
+            }
+        }
+
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                phoneNumber,
+                password);
+        // Authen with Java Spring Security
+        authenticationManager.authenticate(authenticationToken);
+        return jwtTokenUtil.generateToken(existingUser);
     }
 }
