@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.backend.dtos.UserDTO;
 import com.project.backend.dtos.UserLoginDTO;
+import com.project.backend.models.User;
 import com.project.backend.services.UserService;
 
 import jakarta.validation.Valid;
@@ -37,8 +38,8 @@ public class UserController {
             if (!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
                 return ResponseEntity.badRequest().body("Retype password does not match");
             }
-            userService.createUser(userDTO);
-            return ResponseEntity.ok("Register successfully");
+            User user = userService.createUser(userDTO);
+            return ResponseEntity.ok(user);
         } catch (Exception error) {
             return ResponseEntity.badRequest().body(error.getMessage());
         }
@@ -46,9 +47,13 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
-        // Kiểm tra thông tin đăng nhập và sinh ra token
-        String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
-        // Trả về token trong response
-        return ResponseEntity.ok(token);
+        try {
+            // Kiểm tra thông tin đăng nhập và sinh ra token
+            String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+            // Trả về token trong response
+            return ResponseEntity.ok(token);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

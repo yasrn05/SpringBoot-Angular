@@ -9,6 +9,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.project.backend.exceptions.InvalidParamException;
 import com.project.backend.models.User;
 
 import io.jsonwebtoken.Claims;
@@ -24,10 +25,10 @@ public class JwtTokenUtil {
     @Value("${jwt.expiration}")
     private int expiration;
 
-    @Value("$(jwt.secretKey)")
+    @Value("${jwt.secretKey}")
     private String secretKey;
 
-    public String generateToken(User user) {
+    public String generateToken(User user) throws Exception {
         Map<String, Object> claims = new HashMap<>();
         claims.put("phoneNumber", user.getPhoneNumber());
         try {
@@ -38,8 +39,7 @@ public class JwtTokenUtil {
                     .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                     .compact();
         } catch (Exception e) {
-            System.err.println("Cannot create JWT Token, error: " + e.getMessage());
-            return null;
+            throw new InvalidParamException("Cannot create JWT Token, error: " + e.getMessage());
         }
     }
 
