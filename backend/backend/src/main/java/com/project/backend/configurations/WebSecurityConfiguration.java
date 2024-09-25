@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.project.backend.filters.JwtTokenFilter;
+import com.project.backend.models.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,16 +35,16 @@ public class WebSecurityConfiguration {
                             .permitAll()
                             .requestMatchers(HttpMethod.GET,
                                     String.format("%s/orders/**", apiPrefix))
-                            .hasAnyRole("USER", "ADMIN")
+                            .hasAnyRole(Role.USER, Role.ADMIN)
                             .requestMatchers(HttpMethod.POST,
                                     String.format("%s/orders/**", apiPrefix))
-                            .hasRole("USER")
+                            .hasRole(Role.USER)
                             .requestMatchers(HttpMethod.PUT,
                                     String.format("%s/orders/**", apiPrefix))
-                            .hasRole("ADMIN")
+                            .hasRole(Role.ADMIN)
                             .requestMatchers(HttpMethod.DELETE,
                                     String.format("%s/orders/**", apiPrefix))
-                            .hasRole("ADMIN")
+                            .hasRole(Role.ADMIN)
                             .anyRequest().authenticated();
                 });
         return httpSecurity.build();

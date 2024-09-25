@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.project.backend.components.JwtTokenUtil;
 import com.project.backend.dtos.UserDTO;
 import com.project.backend.exceptions.DataNotFoundException;
+import com.project.backend.exceptions.PermissionDenyException;
 import com.project.backend.models.User;
 import com.project.backend.models.Role;
 import com.project.backend.repositories.RoleRepository;
@@ -35,6 +36,11 @@ public class UserService implements IUserService {
         if (userRepository.existsByPhoneNumber(phoneNumber)) {
             throw new DataIntegrityViolationException("Phone number already exists");
         }
+        Role role = roleRepository.findById(userDTO.getRoleId())
+                .orElseThrow(() -> new DataNotFoundException("Role not found"));
+        if (role.getName().toUpperCase().equals(Role.ADMIN)) {
+            throw new PermissionDenyException("Cannot create admin account");
+        }
         // convert userDTO -> user
         User newUser = User.builder()
                 .fullName(userDTO.getFullName())
@@ -46,8 +52,6 @@ public class UserService implements IUserService {
                 .googleAccountId(userDTO.getGoogleAccountId())
                 .activate(true)
                 .build();
-        Role role = roleRepository.findById(userDTO.getRoleId())
-                .orElseThrow(() -> new DataNotFoundException("Role not found"));
         newUser.setRole(role);
         // Kiểm tra nếu có AccountId thì không cần password
         if (userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0) {
