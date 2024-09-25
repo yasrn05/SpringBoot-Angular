@@ -19,34 +19,74 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
-    private final JwtTokenFilter jwtTokenFilter;
-    @Value("${api.prefix}")
-    private String apiPrefix;
+        private final JwtTokenFilter jwtTokenFilter;
+        @Value("${api.prefix}")
+        private String apiPrefix;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers(
-                            String.format("%s/users/register", apiPrefix),
-                            String.format("%s/users/login", apiPrefix))
-                            .permitAll()
-                            .requestMatchers(HttpMethod.GET,
-                                    String.format("%s/orders/**", apiPrefix))
-                            .hasAnyRole(Role.USER, Role.ADMIN)
-                            .requestMatchers(HttpMethod.POST,
-                                    String.format("%s/orders/**", apiPrefix))
-                            .hasRole(Role.USER)
-                            .requestMatchers(HttpMethod.PUT,
-                                    String.format("%s/orders/**", apiPrefix))
-                            .hasRole(Role.ADMIN)
-                            .requestMatchers(HttpMethod.DELETE,
-                                    String.format("%s/orders/**", apiPrefix))
-                            .hasRole(Role.ADMIN)
-                            .anyRequest().authenticated();
-                });
-        return httpSecurity.build();
-    };
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+                httpSecurity
+                                .csrf(AbstractHttpConfigurer::disable)
+                                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                                .authorizeHttpRequests(requests -> {
+                                        requests.requestMatchers(
+                                                        String.format("%s/users/register", apiPrefix),
+                                                        String.format("%s/users/login", apiPrefix))
+                                                        .permitAll()
+                                                        // Categories
+                                                        .requestMatchers(HttpMethod.GET,
+                                                                        String.format("%s/categories**", apiPrefix))
+                                                        .hasAnyRole(Role.USER, Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.POST,
+                                                                        String.format("%s/categories/**", apiPrefix))
+                                                        .hasAnyRole(Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.PUT,
+                                                                        String.format("%s/categories/**", apiPrefix))
+                                                        .hasAnyRole(Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.DELETE,
+                                                                        String.format("%s/categories/**", apiPrefix))
+                                                        .hasAnyRole(Role.ADMIN)
+                                                        // Products
+                                                        .requestMatchers(HttpMethod.GET,
+                                                                        String.format("%s/products**", apiPrefix))
+                                                        .hasAnyRole(Role.USER, Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.POST,
+                                                                        String.format("%s/products/**", apiPrefix))
+                                                        .hasAnyRole(Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.PUT,
+                                                                        String.format("%s/products/**", apiPrefix))
+                                                        .hasAnyRole(Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.DELETE,
+                                                                        String.format("%s/products/**", apiPrefix))
+                                                        .hasAnyRole(Role.ADMIN)
+                                                        // Orders
+                                                        .requestMatchers(HttpMethod.GET,
+                                                                        String.format("%s/orders/**", apiPrefix))
+                                                        .hasAnyRole(Role.USER, Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.POST,
+                                                                        String.format("%s/orders/**", apiPrefix))
+                                                        .hasRole(Role.USER)
+                                                        .requestMatchers(HttpMethod.PUT,
+                                                                        String.format("%s/orders/**", apiPrefix))
+                                                        .hasRole(Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.DELETE,
+                                                                        String.format("%s/orders/**", apiPrefix))
+                                                        .hasRole(Role.ADMIN)
+                                                        // OrderDetail
+                                                        .requestMatchers(HttpMethod.GET,
+                                                                        String.format("%s/order_details/**", apiPrefix))
+                                                        .hasAnyRole(Role.USER, Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.POST,
+                                                                        String.format("%s/order_details/**", apiPrefix))
+                                                        .hasRole(Role.USER)
+                                                        .requestMatchers(HttpMethod.PUT,
+                                                                        String.format("%s/order_details/**", apiPrefix))
+                                                        .hasRole(Role.ADMIN)
+                                                        .requestMatchers(HttpMethod.DELETE,
+                                                                        String.format("%s/order_details/**", apiPrefix))
+                                                        .hasRole(Role.ADMIN)
+                                                        .anyRequest().authenticated();
+                                });
+                return httpSecurity.build();
+        };
 }
