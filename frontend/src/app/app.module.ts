@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
     HeaderComponent,
     FooterComponent,
     DetailProductComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule
@@ -18,7 +20,7 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
   providers: [],
   bootstrap: [
     // HomeComponent
-    DetailProductComponent
+    OrderComponent
   ]
 })
 export class AppModule { }
