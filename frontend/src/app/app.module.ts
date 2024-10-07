@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
 import { OrderComponent } from './order/order.component';
 import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
     DetailProductComponent,
     OrderComponent,
     OrderConfirmComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule
@@ -23,7 +25,8 @@ import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
   bootstrap: [
     // HomeComponent
     // OrderComponent
-    OrderConfirmComponent
+    // OrderConfirmComponent
+    LoginComponent
   ]
 })
 export class AppModule { }
