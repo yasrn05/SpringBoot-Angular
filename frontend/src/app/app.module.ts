@@ -7,6 +7,7 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
 import { OrderComponent } from './order/order.component';
 import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LoginComponent } from './login/login.component';
     OrderComponent,
     OrderConfirmComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule
@@ -26,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     // HomeComponent
     // OrderComponent
     // OrderConfirmComponent
-    LoginComponent
+    // LoginComponent
+    RegisterComponent
   ]
 })
 export class AppModule { }
