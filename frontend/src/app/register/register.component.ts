@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  @ViewChild('registerForm') registerForm!: NgForm;
   //Khai báo các biến tương ứng với trong form
   phone: string;
   password: string;
@@ -27,6 +29,7 @@ export class RegisterComponent {
   }
   onPhoneChange() {
     console.log(`Phone typed: ${this.phone}`)
+    //Valid phone number
   }
   register() {
     const message =
