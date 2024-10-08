@@ -31,6 +31,14 @@ export class RegisterComponent {
     console.log(`Phone typed: ${this.phone}`)
     //Valid phone number
   }
+  //Check retype password
+  checkPasswordsMatch() {
+    if (this.password !== this.retypePassword) {
+      this.registerForm.form.controls['retypePassword'].setErrors({ 'passwordMismatch': true });
+    } else {
+      this.registerForm.form.controls['retypePassword'].setErrors(null);
+    }
+  }
   register() {
     const message =
       `Phone: ${this.phone} \n` +
