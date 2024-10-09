@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from 'src/enviroments/enviroment';
+import { UserService } from '../services/user.service';
+import { RegisterDTO } from '../dtos/register.dto';
 
 @Component({
   selector: 'app-register',
@@ -20,8 +20,7 @@ export class RegisterComponent {
   address: string;
   isAcceped: boolean;
 
-  constructor(private http: HttpClient, private router: Router) {
-    // constructor() {
+  constructor(private router: Router, private UserService: UserService) {
     this.phone = '';
     this.password = '';
     this.retypePassword = '';
@@ -52,7 +51,6 @@ export class RegisterComponent {
       if (monthDiff < 0 || (monthDiff == 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-
       if (age < 18) {
         this.registerForm.form.controls['dateOfBirth'].setErrors({ 'invalidAge': true });
       } else {
@@ -61,18 +59,7 @@ export class RegisterComponent {
     }
   }
   register() {
-    // const message =
-    //   `Phone: ${this.phone} \n` +
-    //   `Password: ${this.password} \n` +
-    //   `RetypePassword: ${this.retypePassword} \n` +
-    //   `FullName: ${this.fullName} \n` +
-    //   `DateOfBirth: ${this.dateOfBirth} \n` +
-    //   `Address: ${this.address} \n` +
-    //   `IsAcceped: ${this.isAcceped}`;
-    // alert(message)
-
-    const apiUrl = `${environment.apiUrl}users/register`;
-    const registerData = {
+    const registerDTO: RegisterDTO = {
       "fullname": this.fullName,
       "phone_number": this.phone,
       "address": this.address,
@@ -83,15 +70,10 @@ export class RegisterComponent {
       "google_account_id": 0,
       "role_id": 2
     };
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', });
-    this.http.post(apiUrl, registerData, { headers },)
+    this.UserService.register(registerDTO)
       .subscribe({
         next: (response: any) => {
-          if (response && (response.status === 200 || response.status === 201)) {
-            this.router.navigate(['/login']);
-          } else {
-            console.log('ok')
-          }
+          this.router.navigate(['/login']);
         },
         complete: () => {
         },
