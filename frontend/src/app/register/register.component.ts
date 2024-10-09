@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from 'src/enviroments/enviroment';
 
 @Component({
   selector: 'app-register',
@@ -21,13 +22,13 @@ export class RegisterComponent {
 
   constructor(private http: HttpClient, private router: Router) {
     // constructor() {
-    this.phone = '2332423432423';
-    this.password = '333';
-    this.retypePassword = '333';
-    this.fullName = 'sang';
+    this.phone = '';
+    this.password = '';
+    this.retypePassword = '';
+    this.fullName = '';
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
-    this.address = 'hanoi';
+    this.address = '';
     this.isAcceped = true;
   }
   onPhoneChange() {
@@ -70,7 +71,7 @@ export class RegisterComponent {
     //   `IsAcceped: ${this.isAcceped}`;
     // alert(message)
 
-    const apiUrl = "localhost:8888/api/v1/users/register";
+    const apiUrl = `${environment.apiUrl}users/register`;
     const registerData = {
       "fullname": this.fullName,
       "phone_number": this.phone,
@@ -80,7 +81,7 @@ export class RegisterComponent {
       "date_of_birth": this.dateOfBirth,
       "facebook_account_id": 0,
       "google_account_id": 0,
-      "role_id": 1
+      "role_id": 2
     };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', });
     this.http.post(apiUrl, registerData, { headers },)
@@ -95,7 +96,7 @@ export class RegisterComponent {
         complete: () => {
         },
         error: (error: any) => {
-          console.error(error);
+          alert(`Cannot register, ${error.error} `);
         }
       });
   }
