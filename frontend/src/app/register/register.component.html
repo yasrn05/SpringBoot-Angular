@@ -41,7 +41,8 @@
                     <div class="mt-3"></div>
                     <div class="form-group">
                         <label for="full-name">Họ và tên</label>
-                        <input type="text" [(ngModel)]="fullName" class="form-control" id="full-name" required>
+                        <input type="text" [(ngModel)]="fullName" class="form-control" id="full-name" name="fullName"
+                            required>
                         <div class="divider-nospace"></div>
                     </div>
                     <div class="mt-3"></div>
@@ -57,14 +58,15 @@
                     <div class="mt-3"></div>
                     <div class="form-group">
                         <label for="address">Địa chỉ</label>
-                        <input type="text" [(ngModel)]="address" class="form-control" id="address">
+                        <input type="text" [(ngModel)]="address" class="form-control" id="address" name="address">
                         <div class="divider-nospace"></div>
                     </div>
                     <div class="mt-3"></div>
                     <div class="form-group">
                         <div class="form-check checkbox-text">
                             <span style="display: flex;">
-                                <input type="checkbox" [(ngModel)]="isAcceped" class="form-check-input" id="agree">
+                                <input type="checkbox" [(ngModel)]="isAcceped" class="form-check-input" id="agree"
+                                    name="isAcceped">
                                 <label for="agree" class="form-check-label text-start">
                                     Tôi đồng ý với các điều khoản.
                                 </label>

@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,15 +19,16 @@ export class RegisterComponent {
   address: string;
   isAcceped: boolean;
 
-  constructor() {
-    this.phone = '';
-    this.password = '';
-    this.retypePassword = '';
-    this.fullName = '';
+  constructor(private http: HttpClient, private router: Router) {
+    // constructor() {
+    this.phone = '2332423432423';
+    this.password = '333';
+    this.retypePassword = '333';
+    this.fullName = 'sang';
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
-    this.address = '';
-    this.isAcceped = false;
+    this.address = 'hanoi';
+    this.isAcceped = true;
   }
   onPhoneChange() {
     console.log(`Phone typed: ${this.phone}`)
@@ -57,14 +60,43 @@ export class RegisterComponent {
     }
   }
   register() {
-    const message =
-      `Phone: ${this.phone} \n` +
-      `Password: ${this.password} \n` +
-      `RetypePassword: ${this.retypePassword} \n` +
-      `FullName: ${this.fullName} \n` +
-      `DateOfBirth: ${this.dateOfBirth} \n` +
-      `Address: ${this.address} \n` +
-      `IsAcceped: ${this.isAcceped}`;
-    alert(message)
+    // const message =
+    //   `Phone: ${this.phone} \n` +
+    //   `Password: ${this.password} \n` +
+    //   `RetypePassword: ${this.retypePassword} \n` +
+    //   `FullName: ${this.fullName} \n` +
+    //   `DateOfBirth: ${this.dateOfBirth} \n` +
+    //   `Address: ${this.address} \n` +
+    //   `IsAcceped: ${this.isAcceped}`;
+    // alert(message)
+
+    const apiUrl = "localhost:8888/api/v1/users/register";
+    const registerData = {
+      "fullname": this.fullName,
+      "phone_number": this.phone,
+      "address": this.address,
+      "password": this.password,
+      "retype_password": this.retypePassword,
+      "date_of_birth": this.dateOfBirth,
+      "facebook_account_id": 0,
+      "google_account_id": 0,
+      "role_id": 1
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', });
+    this.http.post(apiUrl, registerData, { headers },)
+      .subscribe({
+        next: (response: any) => {
+          if (response && (response.status === 200 || response.status === 201)) {
+            this.router.navigate(['/login']);
+          } else {
+            console.log('ok')
+          }
+        },
+        complete: () => {
+        },
+        error: (error: any) => {
+          console.error(error);
+        }
+      });
   }
 }
