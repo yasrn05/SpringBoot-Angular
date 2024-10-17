@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.backend.components.LocalizationUtils;
 import com.project.backend.dtos.UserDTO;
 import com.project.backend.dtos.UserLoginDTO;
 import com.project.backend.models.User;
 import com.project.backend.responses.LoginResponse;
 import com.project.backend.services.UserService;
-import com.project.backend.utils.LocalizationUtils;
 import com.project.backend.utils.MessageKey;
 
 import jakarta.validation.Valid;

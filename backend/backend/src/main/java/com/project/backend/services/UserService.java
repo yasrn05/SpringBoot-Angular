@@ -9,7 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.project.backend.components.JwtTokenUtil;
+import com.project.backend.components.JwtTokenUtils;
 import com.project.backend.dtos.UserDTO;
 import com.project.backend.exceptions.DataNotFoundException;
 import com.project.backend.exceptions.PermissionDenyException;
@@ -26,7 +26,7 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtils jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
     @Override
