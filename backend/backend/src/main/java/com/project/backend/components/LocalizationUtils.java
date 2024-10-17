@@ -17,9 +17,9 @@ public class LocalizationUtils {
     private final MessageSource messageSource;
     private final LocaleResolver localeResolverl;
 
-    public String getLocalizationMessage(String messageKey) {
+    public String getLocalizationMessage(String messageKey, Object... params) { // spread operator
         HttpServletRequest request = WebUtils.getCurrentRequest();
         Locale locale = localeResolverl.resolveLocale(request);
-        return messageSource.getMessage(messageKey, null, locale);
+        return messageSource.getMessage(messageKey, params, locale);
     }
 }
