@@ -30,7 +30,7 @@ public class UserController {
     private final LocalizationUtils localizationUtils;
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO,
+    public ResponseEntity<RegisterResponse> createUser(@Valid @RequestBody UserDTO userDTO,
             BindingResult result) {
         try {
             if (result.hasErrors()) {
@@ -38,7 +38,9 @@ public class UserController {
                         .stream()
                         .map(FieldError::getDefaultMessage)
                         .toList();
-                return ResponseEntity.badRequest().body(errorMessages);
+                return ResponseEntity.badRequest().body(RegisterResponse.builder()
+                        .message(localizationUtils.getLocalizationMessage(MessageKey.REGISTER_FAILED, errorMessages))
+                        .build());
             }
             if (!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
                 return ResponseEntity.badRequest().body(RegisterResponse.builder()
@@ -46,9 +48,14 @@ public class UserController {
                         .build());
             }
             User user = userService.createUser(userDTO);
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(RegisterResponse.builder()
+                    .message(localizationUtils.getLocalizationMessage(MessageKey.REGISTER_SUCCESSFULLY))
+                    .user(user)
+                    .build());
         } catch (Exception error) {
-            return ResponseEntity.badRequest().body(error.getMessage());
+            return ResponseEntity.badRequest().body(RegisterResponse.builder()
+                    .message(localizationUtils.getLocalizationMessage(MessageKey.REGISTER_FAILED, error.getMessage()))
+                    .build());
         }
     }
 
