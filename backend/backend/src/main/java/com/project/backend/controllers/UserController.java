@@ -15,6 +15,7 @@ import com.project.backend.dtos.UserDTO;
 import com.project.backend.dtos.UserLoginDTO;
 import com.project.backend.models.User;
 import com.project.backend.responses.LoginResponse;
+import com.project.backend.responses.RegisterResponse;
 import com.project.backend.services.UserService;
 import com.project.backend.utils.MessageKey;
 
@@ -40,7 +41,9 @@ public class UserController {
                 return ResponseEntity.badRequest().body(errorMessages);
             }
             if (!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
-                return ResponseEntity.badRequest().body("Retype password does not match");
+                return ResponseEntity.badRequest().body(RegisterResponse.builder()
+                        .message(localizationUtils.getLocalizationMessage(MessageKey.PASSWORD_NOT_MATCH))
+                        .build());
             }
             User user = userService.createUser(userDTO);
             return ResponseEntity.ok(user);
