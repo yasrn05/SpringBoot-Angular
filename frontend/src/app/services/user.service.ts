@@ -11,7 +11,10 @@ import { LoginDTO } from "../dtos/user/login.dto";
 export class UserService {
     constructor(private http: HttpClient) { }
     private createHeader(): HttpHeaders {
-        return new HttpHeaders({ 'Content-Type': 'application/json', });
+        return new HttpHeaders({
+            'Content-Type': 'application/json',
+            "Accept-Language": 'vi'
+        });
     }
     private apiConfig = {
         headers: this.createHeader(),
