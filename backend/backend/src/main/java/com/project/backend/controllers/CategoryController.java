@@ -1,7 +1,9 @@
 package com.project.backend.controllers;
 
 import java.util.List;
+import java.util.Locale;
 
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.project.backend.dtos.CategoryDTO;
 import com.project.backend.models.Category;
+import com.project.backend.responses.UpdateCategoryResponse;
 import com.project.backend.services.CategoryService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +34,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
     @PostMapping("")
     // Nếu tham số truyền vào là 1 object thì sao ? => Data Transfer Object =
@@ -56,11 +63,17 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCategory(
+    public ResponseEntity<UpdateCategoryResponse> updateCategory(
             @PathVariable Long id,
-            @Valid @RequestBody CategoryDTO categoryDTO) {
+            @Valid @RequestBody CategoryDTO categoryDTO,
+            HttpServletRequest request) {
         categoryService.updateCategory(id, categoryDTO);
-        return ResponseEntity.ok("Update category successfully");
+
+        Locale locale = localeResolver.resolveLocale(request);
+        return ResponseEntity.ok(
+                UpdateCategoryResponse.builder()
+                        .message(messageSource.getMessage("category.update_category.update_successfully", null, locale))
+                        .build());
     }
 
     @DeleteMapping("/{id}")
