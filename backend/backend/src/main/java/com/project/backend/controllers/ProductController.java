@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.backend.components.LocalizationUtils;
 // import com.github.javafaker.Faker;
 import com.project.backend.dtos.ProductDTO;
 import com.project.backend.dtos.ProductImageDTO;
@@ -47,6 +48,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
     // Post http://localhost:8888/v1/api/products

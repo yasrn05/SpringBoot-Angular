@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.backend.components.LocalizationUtils;
 import com.project.backend.dtos.OrderDetailDTO;
 import com.project.backend.models.OrderDetail;
 import com.project.backend.responses.OrderDetailResponse;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderDetailController {
     private final OrderDetailService orderDetailService;
+    private final LocalizationUtils localizationUtils;
 
     // Thêm mới order detail
     @PostMapping
