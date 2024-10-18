@@ -18,6 +18,7 @@ import com.project.backend.components.LocalizationUtils;
 import com.project.backend.dtos.OrderDTO;
 import com.project.backend.models.Order;
 import com.project.backend.services.OrderService;
+import com.project.backend.utils.MessageKey;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -87,9 +88,10 @@ public class OrderController {
     }
 
     @DeleteMapping("/{order_id}")
-    public ResponseEntity<String> deleteOrder(
+    public ResponseEntity<?> deleteOrder(
             @Valid @PathVariable("order_id") Long orderId) {
         orderService.deletedOrder(orderId);
-        return ResponseEntity.ok("Order deleted successfully");
+        return ResponseEntity
+                .ok(localizationUtils.getLocalizationMessage(MessageKey.DELETE_ORDER_SUCCESSFULLY, orderId));
     }
 }

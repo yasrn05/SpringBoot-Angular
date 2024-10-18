@@ -17,6 +17,7 @@ import com.project.backend.dtos.OrderDetailDTO;
 import com.project.backend.models.OrderDetail;
 import com.project.backend.responses.OrderDetailResponse;
 import com.project.backend.services.OrderDetailService;
+import com.project.backend.utils.MessageKey;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +74,7 @@ public class OrderDetailController {
     public ResponseEntity<?> deleteOrderDetail(
             @Valid @PathVariable("order_id") Long orderId) {
         orderDetailService.deletedById(orderId);
-        return ResponseEntity.ok().body("Delete Order Detail with id: " + orderId + " successfully");
+        return ResponseEntity.ok().body(
+                localizationUtils.getLocalizationMessage(MessageKey.DELETE_ORDER_DETAIL_SUCCESSFULLY, orderId));
     }
 }

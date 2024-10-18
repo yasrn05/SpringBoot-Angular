@@ -13,7 +13,7 @@ public class MessageKey {
     public static final String UPDATE_CATEGORY_SUCCESSFULLY = "category.update_category.update_successfully";
     public static final String DELETE_CATEGORY_SUCCESSFULLY = "category.delete_category.delete_successfully";
 
-    public static final String DELETE_ORDER_SUCCESSFULLY = "oder.delete_order.delete_successfully";
+    public static final String DELETE_ORDER_SUCCESSFULLY = "order.delete_order.delete_successfully";
     public static final String DELETE_ORDER_DETAIL_SUCCESSFULLY = "order.delete_order_detail.delete_successfully";
 
     public static final String UPDATE_IMAGES_MAX_5 = "product.upload_images.error_max_5_images";
