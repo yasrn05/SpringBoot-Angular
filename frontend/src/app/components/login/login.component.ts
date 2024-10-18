@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { LoginDTO } from '../dtos/user/login.dto';
+import { LoginDTO } from '../../dtos/user/login.dto';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +11,8 @@ import { UserService } from '../services/user.service';
 })
 export class LoginComponent {
   @ViewChild('loginForm') loginForm!: NgForm;
-  phoneNumber: string = '0968698103';
-  password: string = '123';
+  phoneNumber: string = '';
+  password: string = '';
 
   constructor(private router: Router, private userService: UserService) {
     this.phoneNumber = '';
@@ -33,12 +33,13 @@ export class LoginComponent {
     this.userService.login(loginDTO)
       .subscribe({
         next: (response: any) => {
+          let { message, token } = response
           // this.router.navigate(['/login']);
         },
         complete: () => {
         },
         error: (error: any) => {
-          alert(`Cannot login, ${error.error} `);
+          alert(error.error.message);
         }
       });
   }

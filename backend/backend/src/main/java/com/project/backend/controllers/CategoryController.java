@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 
-import com.project.backend.components.LocalizationUtils;
+// import com.project.backend.components.LocalizationUtils;
 import com.project.backend.dtos.CategoryDTO;
 import com.project.backend.models.Category;
 import com.project.backend.responses.UpdateCategoryResponse;
@@ -37,7 +37,7 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final MessageSource messageSource;
     private final LocaleResolver localeResolver;
-    private final LocalizationUtils localizationUtils;
+    // private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
     // Nếu tham số truyền vào là 1 object thì sao ? => Data Transfer Object =
