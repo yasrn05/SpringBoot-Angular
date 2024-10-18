@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { LoginDTO } from '../../dtos/user/login.dto';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { TokenService } from 'src/app/services/token.service';
+import { LoginResponse } from '../../responses/user/login.response';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +16,12 @@ export class LoginComponent {
   phoneNumber: string = '';
   password: string = '';
 
-  constructor(private router: Router, private userService: UserService) {
-    this.phoneNumber = '';
-    this.password = ''
-  }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private tokenService: TokenService,
+  ) { }
+
   onPhoneNumberChange() {
     console.log(`Phone typed: ${this.phoneNumber}`)
     //Valid phone number
@@ -32,8 +36,10 @@ export class LoginComponent {
     }
     this.userService.login(loginDTO)
       .subscribe({
-        next: (response: any) => {
-          let { message, token } = response
+        next: (response: LoginResponse) => {
+          const { token } = response;
+
+          this.tokenService.setToken(token);
           // this.router.navigate(['/login']);
         },
         complete: () => {
