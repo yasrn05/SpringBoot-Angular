@@ -39,6 +39,7 @@ import com.project.backend.models.ProductImage;
 import com.project.backend.responses.ProductListResponse;
 import com.project.backend.responses.ProductResponse;
 import com.project.backend.services.ProductService;
+import com.project.backend.utils.MessageKey;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +79,8 @@ public class ProductController {
             Product existingProduct = productService.getProductById(productId);
             files = files == null ? new ArrayList<MultipartFile>() : files;
             if (files.size() > ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
-                return ResponseEntity.badRequest().body("You can only upload maximum 5 images");
+                return ResponseEntity.badRequest()
+                        .body(localizationUtils.getLocalizationMessage(MessageKey.UPDATE_IMAGES_MAX_5));
             }
             List<ProductImage> productImages = new ArrayList<>();
             for (MultipartFile file : files) {
@@ -88,12 +90,12 @@ public class ProductController {
                 // Kiểm tra kích thước file và đinh dạng
                 if (file.getSize() > 10 * 1024 * 1024) { // Kích thước > 10MB
                     return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                            .body("File is too large! Maximum size is 10MB");
+                            .body(localizationUtils.getLocalizationMessage(MessageKey.UPDATE_IMAGES_FILE_LARGE));
                 }
                 String contentType = file.getContentType();
                 if (contentType == null || !contentType.startsWith("image/")) {
                     return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-                            .body("File must be an image");
+                            .body(localizationUtils.getLocalizationMessage(MessageKey.UPDATE_IMAGES_MUST_BE_IMAGE));
                 }
                 // Lưu file và cập nhật thumnail trong DTO
                 String filename = storeFile(file); // Thay thế hàm này với code để lưu file
