@@ -38,8 +38,12 @@ public class WebSecurityConfiguration {
                                 .authorizeHttpRequests(requests -> {
                                         requests.requestMatchers(
                                                         String.format("%s/users/register", apiPrefix),
-                                                        String.format("%s/users/login", apiPrefix))
+                                                        String.format("%s/users/login", apiPrefix),
+                                                        String.format("%s/roles", apiPrefix))
                                                         .permitAll()
+                                                        // .requestMatchers(HttpMethod.GET,
+                                                        // String.format("%s/roles**", apiPrefix))
+                                                        // .hasAnyRole(Role.USER, Role.ADMIN)
                                                         // Categories
                                                         .requestMatchers(HttpMethod.GET,
                                                                         String.format("%s/categories**", apiPrefix))
