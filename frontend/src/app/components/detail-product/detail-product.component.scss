@@ -9,7 +9,6 @@
     width: 100%;
     object-fit: cover;
 }
-
 .thumbnail-container {
     display: flex;
     justify-content: space-between;
@@ -21,10 +20,12 @@
     width: 120px;
     height: 120px;
     margin-right: 5px;
+    /* Thêm khoảng cách ngang giữa các ảnh */
 }
 
 .thumbnail-item:last-child {
-    margin-right: 0px;
+    margin-right: 0;
+    /* Xóa khoảng cách ngang ở ảnh cuối cùng */
 }
 
 .thumbnail-item img {
@@ -36,7 +37,6 @@
 .thumbnail-item.active {
     border: 2px solid white;
 }
-
 .product-details {
     color: white;
     padding: 20px;
@@ -51,27 +51,25 @@
 .product-actions button {
     margin-right: 10px;
 }
-
 .border-wrapper {
-    border: 1px solid white;
-}
+    border: 1px solid white;      
+  }
 
-.product-quantity {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 10px;
-}
+  .product-quantity {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 10px;
+  }
 
-.product-quantity button {
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.product-quantity input {
+  .product-quantity button {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+  }
+  .product-quantity input {
     background-color: transparent;
     border: none;
     color: white;
@@ -79,8 +77,7 @@
     text-align: center;
     width: 40px;
     margin: 0 10px;
-}
-
-.product-quantity input:focus {
+  }
+  .product-quantity input:focus {
     outline: none;
-}
+  }  

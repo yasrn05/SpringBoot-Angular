@@ -1,6 +1,6 @@
 .container {
     color: white;
-    height: 100vh;
+    height: 100vh;    
 }
 
 .register-form {
@@ -15,8 +15,10 @@
 
 .register-header {
     text-align: center;
+    /*      color: rgb(233, 66, 178);*/
     color: rgb(105, 244, 181);
     margin-bottom: 20px;
+
 }
 
 .label-text {
@@ -33,6 +35,7 @@
     color: white;
     background-color: transparent;
     outline: none;
+    box-shadow: none;
     border-color: transparent;
     padding-left: 0;
 }
@@ -44,7 +47,7 @@
 .password-toggle {
     position: absolute;
     top: 50%;
-    right: 10%;
+    right: 10px;
     transform: translateY(-50%);
     color: rgb(105, 244, 181);
     cursor: pointer;
@@ -55,12 +58,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10%;
+    margin-top: 10px;
 }
 
+/* Màu checkbox khi được chọn */
 .checkbox-text input[type="checkbox"]:checked {
     border-color: white;
-    background-color: rgb(233, 65, 178);
+    background-color: rgb(233, 66, 178);
 }
 
 .form-check-input {
@@ -85,6 +89,7 @@
 .divider {
     height: 1px;
     background-color: rgb(243, 165, 42);
+    /*      background-color: rgb(105, 244, 181)*/
     margin: 20px;
 }
 
@@ -93,14 +98,18 @@
 }
 
 .form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: rgba(243, 165, 42, 0.4);
     opacity: 1;
+    /* Firefox */
 }
 
 .form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
     color: rgba(243, 165, 42, 0.4);
 }
 
 .form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
     color: rgba(243, 165, 42, 0.4);
 }

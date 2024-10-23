@@ -15,10 +15,6 @@
     width: 200px;
 }
 
-option {
-    background-color: rgb(19, 23, 42);
-}
-
 .search-input {
     width: 300px;
     background-color: rgb(19, 23, 42);
@@ -33,17 +29,19 @@ option {
 }
 
 .form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: rgba(255, 255, 255, 0.5);
     opacity: 1;
+    /* Firefox */
 }
 
-/* internet export */
 .form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* edge */
 .form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
     color: rgba(255, 255, 255, 0.5);
 }
 
@@ -90,4 +88,5 @@ option {
 
 .space-x {
     margin: 0 5px;
+    /*margin-top, margin-right, margin-bottom, margin-left*/
 }
