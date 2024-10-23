@@ -9,22 +9,22 @@ import { OrderConfirmComponent } from './components/order-confirm/order-confirm.
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { 
-  HttpClientModule, 
-  HTTP_INTERCEPTORS 
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS
 } from '@angular/common/http';
-import {TokenInterceptor} from './interceptors/token.interceptor'
+import { TokenInterceptor } from './interceptors/token.interceptor'
 
 
 @NgModule({
-  declarations: [    
-    HomeComponent, 
+  declarations: [
+    HomeComponent,
     HeaderComponent,
-    FooterComponent, 
-    DetailProductComponent, 
-    OrderComponent, 
-    OrderConfirmComponent, 
-    LoginComponent, 
+    FooterComponent,
+    DetailProductComponent,
+    OrderComponent,
+    OrderConfirmComponent,
+    LoginComponent,
     RegisterComponent
   ],
   imports: [
@@ -40,11 +40,11 @@ import {TokenInterceptor} from './interceptors/token.interceptor'
     },
   ],
   bootstrap: [
-    HomeComponent,
+    // HomeComponent,
     //DetailProductComponent,
     // OrderComponent,
     //OrderConfirmComponent,
-    // LoginComponent,
+    LoginComponent,
     // RegisterComponent
   ]
 })
