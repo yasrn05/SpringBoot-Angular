@@ -1,0 +1,759 @@
+{
+	"info": {
+		"_postman_id": "5326d94c-940d-4f8f-a8f9-e22cef68a0ab",
+		"name": "BackendSpringBoots",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35164974"
+	},
+	"item": [
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "/categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxODE3MjU3fQ.DOWlwJ8ntnVhqXQB6R1clnkW1XiV2aAcA4SLcQjEWKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "vi",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{API_PREFIX}}categories?page=1&limit=3",
+							"host": [
+								"{{API_PREFIX}}categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Đồ ăn\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}categories",
+							"host": [
+								"{{API_PREFIX}}categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxNzMyOTc3fQ.9AtwxRDphvh-HUBRKuR-J8uwGxUqMRkCaVSNZpShQ_Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "vi",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Aripod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}categories/12",
+							"host": [
+								"{{API_PREFIX}}categories"
+							],
+							"path": [
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/categories/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}categories/12",
+							"host": [
+								"{{API_PREFIX}}categories"
+							],
+							"path": [
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "/products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxODE3MjU3fQ.DOWlwJ8ntnVhqXQB6R1clnkW1XiV2aAcA4SLcQjEWKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}products?page=1&limit=12",
+							"host": [
+								"{{API_PREFIX}}products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/products/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxODE2ODc1fQ.-Ebnk1dlW_pHJyJLJbn4_-MsbvMuU-gnad1pyCzHRws",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}products/4",
+							"host": [
+								"{{API_PREFIX}}products"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"copmputer\",\n    \"price\": 123,\n    \"description\": \"test test\",\n    \"category_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}products",
+							"host": [
+								"{{API_PREFIX}}products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/products/uploads/{id}",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/home/sang/Pictures/705660.jpg",
+										"/home/sang/Pictures/1014125.jpg",
+										"/home/sang/Pictures/Avata.png",
+										"/home/sang/Pictures/background.jpeg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}products/uploads/1",
+							"host": [
+								"{{API_PREFIX}}products"
+							],
+							"path": [
+								"uploads",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generateFakeProducts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}products/generateFakeProducts",
+							"host": [
+								"{{API_PREFIX}}products"
+							],
+							"path": [
+								"generateFakeProducts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/products/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}products/2",
+							"host": [
+								"{{API_PREFIX}}products"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "/register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "vi",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"ADMIN\",\n    \"phone_number\": \"\",\n    \"address\": \"\",\n    \"password\": \"\",\n    \"retype_password\": \"123456\",\n    \"date_of_birth\": \"2005-01-23\",\n    \"facebook_account_id\": 0,\n    \"google_account_id\": 0,\n    \"role_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}users/register",
+							"host": [
+								"{{API_PREFIX}}users"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "vi",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone_number\": \"0968698102\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8888/api/v1/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "/orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDMiLCJzdWIiOiIwOTY4Njk4MTAzIiwiZXhwIjoxNzI5ODIzMTg5fQ.dVTILloo-_lulmtvd-1nwYJPMCV6XUaL9_x77TWSZKE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 30,\n    \"fullname\": \"sangtd\",\n    \"email\": \"sangtd200@gamil.com\",\n    \"phone_number\": \"09686981]02\",\n    \"address\": \"Tay Mo\",\n    \"note\": \"okok\",\n    \"total_money\": 222,\n    \"shipping_method\": \"express\",\n    \"payment_method\": \"COD\",\n    \"shipping_address\": \"okok CON CAS\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}orders",
+							"host": [
+								"{{API_PREFIX}}orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orders/{order_id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDMiLCJzdWIiOiIwOTY4Njk4MTAzIiwiZXhwIjoxNzI5NzgzMzcyfQ.aFyezXmoT2nABuPki_KRCbGsbUBT_vz6gQo2w6rqD2U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDMiLCJzdWIiOiIwOTY4Njk4MTAzIiwiZXhwIjoxNzI5NzgzMzcyfQ.aFyezXmoT2nABuPki_KRCbGsbUBT_vz6gQo2w6rqD2U",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{API_PREFIX}}orders/12",
+							"host": [
+								"{{API_PREFIX}}orders"
+							],
+							"path": [
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orders/user/{user_id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDMiLCJzdWIiOiIwOTY4Njk4MTAzIiwiZXhwIjoxNzI5NzgzMzcyfQ.aFyezXmoT2nABuPki_KRCbGsbUBT_vz6gQo2w6rqD2U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}orders/user/30",
+							"host": [
+								"{{API_PREFIX}}orders"
+							],
+							"path": [
+								"user",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orders/{order_id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDMiLCJzdWIiOiIwOTY4Njk4MTAzIiwiZXhwIjoxNzI5ODIzMTg5fQ.dVTILloo-_lulmtvd-1nwYJPMCV6XUaL9_x77TWSZKE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 12,\n    \"fullname\": \"sangtd edit\",\n    \"email\": \"sangtd200@gamil.com\",\n    \"phone_number\": \"09686981]02\",\n    \"address\": \"Tay Mo\",\n    \"note\": \"okok edit edit\",\n    \"total_money\": 222,\n    \"shipping_method\": \"express\",\n    \"payment_method\": \"COD\",\n    \"shipping_date\": \"2024-09-01\",\n    \"shipping_address\": \"okok edit edit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}orders/6",
+							"host": [
+								"{{API_PREFIX}}orders"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/orders/{order_id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxNzU0NTA5fQ.uZLOZhTA1uQMIKJ_vdMPwpSf8LRkhuxW4o_YYW9bmyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "vi",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}orders/12",
+							"host": [
+								"{{API_PREFIX}}orders"
+							],
+							"path": [
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order_details",
+			"item": [
+				{
+					"name": "/order_details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": 6,\n    \"product_id\": 23,\n    \"price\": 122,\n    \"number_of_products\": 2,\n    \"total_money\": 234,\n    \"color\": \"red\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}order_details",
+							"host": [
+								"{{API_PREFIX}}order_details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order_details/{id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}order_details/3",
+							"host": [
+								"{{API_PREFIX}}order_details"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order_details/order/{id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxODE3MjU3fQ.DOWlwJ8ntnVhqXQB6R1clnkW1XiV2aAcA4SLcQjEWKI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": 23,\n    \"product_id\": 1,\n    \"price\": 122,\n    \"number_of_products\": 2,\n    \"total_money\": 234,\n    \"color\": \"red\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}order_details/order/6",
+							"host": [
+								"{{API_PREFIX}}order_details"
+							],
+							"path": [
+								"order",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order_details/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": 6,\n    \"product_id\": 22,\n    \"price\": 12244,\n    \"number_of_products\": 2,\n    \"total_money\": 234,\n    \"color\": \"red\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}order_details/3",
+							"host": [
+								"{{API_PREFIX}}order_details"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/order_details/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5Njg2OTgxMDIiLCJzdWIiOiIwOTY4Njk4MTAyIiwiZXhwIjoxNzMxNzU1MjM0fQ.2VUKycTTUZQ6pc7jZJBm7kc41iO9no7voAyprIDV3xQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "vi",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_PREFIX}}order_details/33",
+							"host": [
+								"{{API_PREFIX}}order_details"
+							],
+							"path": [
+								"33"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "/roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}roles",
+							"host": [
+								"{{API_PREFIX}}roles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
