@@ -36,15 +36,12 @@ export class LoginComponent {
 
   ngOnInit() {
     // Gọi API lấy danh sách roles và lưu vào biến roles
-    debugger
     this.roleService.getRoles().subscribe({
       next: (roles: Role[]) => { // Sử dụng kiểu Role[]
-        debugger
         this.roles = roles;
         this.selectedRole = roles.length > 0 ? roles[1] : undefined;
       },
       error: (error: any) => {
-        debugger
         console.error('Error getting roles:', error);
       }
     });
@@ -54,8 +51,6 @@ export class LoginComponent {
     const message = `phone: ${this.phoneNumber}` +
       `password: ${this.password}`;
     //alert(message);
-    debugger
-
     const loginDTO: LoginDTO = {
       phone_number: this.phoneNumber,
       password: this.password,
@@ -63,7 +58,6 @@ export class LoginComponent {
     };
     this.userService.login(loginDTO).subscribe({
       next: (response: LoginResponse) => {
-        debugger;
         const { token } = response;
         if (this.rememberMe) {
           this.tokenService.setToken(token);
@@ -71,10 +65,8 @@ export class LoginComponent {
         //this.router.navigate(['/login']);
       },
       complete: () => {
-        debugger;
       },
       error: (error: any) => {
-        debugger;
         alert(error.error.message);
       }
     });
