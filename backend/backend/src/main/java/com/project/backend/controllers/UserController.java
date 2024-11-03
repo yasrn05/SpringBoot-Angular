@@ -63,7 +63,10 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
         try {
             // Kiểm tra thông tin đăng nhập và sinh ra token
-            String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
+            String token = userService.login(
+                    userLoginDTO.getPhoneNumber(),
+                    userLoginDTO.getPassword(),
+                    userLoginDTO.getRoleId());
             // Trả về token trong response
             return ResponseEntity.ok(LoginResponse.builder()
                     .message(
