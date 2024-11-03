@@ -61,6 +61,10 @@ public class WebSecurityConfiguration {
                                                         .requestMatchers(HttpMethod.GET,
                                                                         String.format("%s/products**", apiPrefix))
                                                         .permitAll()
+                                                        .requestMatchers(HttpMethod.GET,
+                                                                        String.format("%s/products/images/**",
+                                                                                        apiPrefix))
+                                                        .permitAll()
                                                         .requestMatchers(HttpMethod.POST,
                                                                         String.format("%s/products/**", apiPrefix))
                                                         .hasAnyRole(Role.ADMIN)
