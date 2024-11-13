@@ -18,7 +18,7 @@
         name VARCHAR(20) NOT NULL
     );
 --Tạo liên kết giữa users và roles
-    ALTER TABLE users ADD COLUMN roles_id INT;
+    ALTER TABLE users ADD COLUMN role_id INT;
     ALTER TABLE users ADD FOREIGN KEY (role_id) REFERENCES roles(id);
 --CREATE TABLE tokens, key để check đăng nhập
     CREATE TABLE tokens(
@@ -57,8 +57,7 @@
         description LONGTEXT DEFAULT '',
         created_at DATETIME,
         updated_at DATETIME,
-        category_id INT,
-
+        category_id INT
     );
 -- CREATE TABLE product_images, chứa url ảnh của sản phẩm
     CREATE TABLE product_images(
