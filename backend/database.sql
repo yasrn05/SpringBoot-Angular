@@ -111,3 +111,12 @@
         FOREIGN KEY (order_id) REFERENCES orders(id),
         FOREIGN KEY (product_id) REFERENCES products(id)
     );
+
+--Update thêm cho bảng Products
+    UPDATE products
+    SET thumbnail = (
+        SELECT image_url
+        FROM product_images
+        WHERE products.id = product_images.product_id
+        LIMIT 1
+    );
