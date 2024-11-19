@@ -112,7 +112,7 @@
         FOREIGN KEY (product_id) REFERENCES products(id)
     );
 
---Update thêm cho bảng Products
+--Update ảnh thêm cho bảng Products
     UPDATE products
     SET thumbnail = (
         SELECT image_url
