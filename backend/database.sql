@@ -7,7 +7,7 @@
 	    password VARCHAR(100) NOT NULL DEFAULT '',
 	    created_at DATETIME,
 	    updated_at DATETIME,
-	    is_activate TINYINT(1) DEFAULT 1,
+	    is_active TINYINT(1) DEFAULT 1,
 	    date_of_birth DATE,
 	    facebook_account_id INT DEFAULT 0,
 	    google_account_id INT DEFAULT 0
@@ -91,8 +91,8 @@
     ALTER TABLE orders ADD COLUMN shipping_date DATE;
     ALTER TABLE orders ADD COLUMN tracking_number VARCHAR(100);
     ALTER TABLE orders ADD COLUMN payment_method VARCHAR(100);
---Khi xóa đơn hàng thì ko xóa trực tiếp mà thêm trường activae để kiếm soát
-    ALTER TABLE orders ADD COLUMN activae TINYINT(1);
+--Khi xóa đơn hàng thì ko xóa trực tiếp mà thêm trường active để kiếm soát
+    ALTER TABLE orders ADD COLUMN active TINYINT(1);
 --Kiểm soát các giá trị mà status đơn hàng có thể nhận
     ALTER TABLE orders
     MODIFY COLUMN status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled')
