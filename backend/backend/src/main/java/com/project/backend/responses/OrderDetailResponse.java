@@ -2,20 +2,17 @@ package com.project.backend.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.backend.models.OrderDetail;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class OrderDetailResponse {
     private Long id;
 
-    @JsonProperty("oder_id")
+    @JsonProperty("order_id")
     private Long orderId;
 
     @JsonProperty("product_id")
@@ -28,9 +25,8 @@ public class OrderDetailResponse {
     private int numberOfProducts;
 
     @JsonProperty("total_money")
-    private float totalMoney;
+    private Float totalMoney;
 
-    @JsonProperty("color")
     private String color;
 
     public static OrderDetailResponse fromOrderDetail(OrderDetail orderDetail) {

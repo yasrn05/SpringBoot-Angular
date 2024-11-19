@@ -1,19 +1,16 @@
 package com.project.backend.services;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.project.backend.dtos.CategoryDTO;
 import com.project.backend.models.Category;
 import com.project.backend.repositories.CategoryRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryService implements ICategoryService {
-
     private final CategoryRepository categoryRepository;
 
     @Override
@@ -26,9 +23,9 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void deleteCategory(long id) {
-        // Xóa
-        categoryRepository.deleteById(id);
+    public Category getCategoryById(long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
     @Override
@@ -37,17 +34,17 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category getCategoryById(long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-    }
-
-    @Override
-    public Category updateCategory(long categoryId, CategoryDTO categoryDTO) {
+    public Category updateCategory(long categoryId,
+            CategoryDTO categoryDTO) {
         Category existingCategory = getCategoryById(categoryId);
         existingCategory.setName(categoryDTO.getName());
         categoryRepository.save(existingCategory);
         return existingCategory;
     }
 
+    @Override
+    public void deleteCategory(long id) {
+        // xóa xong
+        categoryRepository.deleteById(id);
+    }
 }

@@ -1,9 +1,5 @@
 package com.project.backend.services;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.project.backend.dtos.OrderDetailDTO;
 import com.project.backend.exceptions.DataNotFoundException;
 import com.project.backend.models.Order;
@@ -12,57 +8,58 @@ import com.project.backend.models.Product;
 import com.project.backend.repositories.OrderDetailRepository;
 import com.project.backend.repositories.OrderRepository;
 import com.project.backend.repositories.ProductRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
 @RequiredArgsConstructor
+@Service
 public class OrderDetailService implements IOrderDetailService {
         private final OrderRepository orderRepository;
         private final OrderDetailRepository orderDetailRepository;
         private final ProductRepository productRepository;
 
         @Override
-        public OrderDetail createOrderDetail(OrderDetailDTO oderDetailDTO) throws Exception {
-                // Check order & product
-                Order order = orderRepository.findById(oderDetailDTO.getOrderId())
-                                .orElseThrow(
-                                                () -> new DataNotFoundException("Cannot find order with id: "
-                                                                + oderDetailDTO.getOrderId()));
-                Product product = productRepository.findById(oderDetailDTO.getProductId())
-                                .orElseThrow(
-                                                () -> new DataNotFoundException(
-                                                                "Cannot find product with id: "
-                                                                                + oderDetailDTO.getProductId()));
+        public OrderDetail createOrderDetail(OrderDetailDTO orderDetailDTO) throws Exception {
+                // tìm xem orderId có tồn tại ko
+                Order order = orderRepository.findById(orderDetailDTO.getOrderId())
+                                .orElseThrow(() -> new DataNotFoundException(
+                                                "Cannot find Order with id : " + orderDetailDTO.getOrderId()));
+                // Tìm Product theo id
+                Product product = productRepository.findById(orderDetailDTO.getProductId())
+                                .orElseThrow(() -> new DataNotFoundException(
+                                                "Cannot find product with id: " + orderDetailDTO.getProductId()));
                 OrderDetail orderDetail = OrderDetail.builder()
                                 .order(order)
                                 .product(product)
-                                .price(oderDetailDTO.getPrice())
-                                .numberOfProducts(oderDetailDTO.getNumberOfProducts())
-                                .totalMoney(oderDetailDTO.getTotalMoney())
-                                .color(oderDetailDTO.getColor())
+                                .numberOfProducts(orderDetailDTO.getNumberOfProducts())
+                                .price(orderDetailDTO.getPrice())
+                                .totalMoney(orderDetailDTO.getTotalMoney())
+                                .color(orderDetailDTO.getColor())
                                 .build();
+                // lưu vào db
                 return orderDetailRepository.save(orderDetail);
         }
 
         @Override
-        public OrderDetail getOrderDetail(Long id) throws Exception {
+        public OrderDetail getOrderDetail(Long id) throws DataNotFoundException {
                 return orderDetailRepository.findById(id)
-                                .orElseThrow(() -> new DataNotFoundException("Cannot find oderdetail with id: " + id));
+                                .orElseThrow(() -> new DataNotFoundException("Cannot find OrderDetail with id: " + id));
         }
 
         @Override
-        public OrderDetail updateOrderDetail(Long id, OrderDetailDTO orderDetailDTO) throws Exception {
-                // Check orderDetail
+        public OrderDetail updateOrderDetail(Long id, OrderDetailDTO orderDetailDTO)
+                        throws DataNotFoundException {
+                // tìm xem order detail có tồn tại ko đã
                 OrderDetail existingOrderDetail = orderDetailRepository.findById(id)
-                                .orElseThrow(() -> new DataNotFoundException("Cannot find OrderDetail with id: " + id));
+                                .orElseThrow(() -> new DataNotFoundException(
+                                                "Cannot find order detail with id: " + id));
                 Order existingOrder = orderRepository.findById(orderDetailDTO.getOrderId())
-                                .orElseThrow(
-                                                () -> new DataNotFoundException("Cannot find Order with id: "
-                                                                + orderDetailDTO.getOrderId()));
+                                .orElseThrow(() -> new DataNotFoundException("Cannot find order with id: " + id));
                 Product existingProduct = productRepository.findById(orderDetailDTO.getProductId())
                                 .orElseThrow(() -> new DataNotFoundException(
-                                                "Cannot find Prodcut with id: " + orderDetailDTO.getProductId()));
+                                                "Cannot find product with id: " + orderDetailDTO.getProductId()));
                 existingOrderDetail.setPrice(orderDetailDTO.getPrice());
                 existingOrderDetail.setNumberOfProducts(orderDetailDTO.getNumberOfProducts());
                 existingOrderDetail.setTotalMoney(orderDetailDTO.getTotalMoney());
@@ -73,7 +70,7 @@ public class OrderDetailService implements IOrderDetailService {
         }
 
         @Override
-        public void deletedById(Long id) {
+        public void deleteById(Long id) {
                 orderDetailRepository.deleteById(id);
         }
 
@@ -81,5 +78,4 @@ public class OrderDetailService implements IOrderDetailService {
         public List<OrderDetail> findByOrderId(Long orderId) {
                 return orderDetailRepository.findByOrderId(orderId);
         }
-
 }

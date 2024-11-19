@@ -1,15 +1,14 @@
 package com.project.backend.responses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.MappedSuperclass;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
+@Data // toString
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass

@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DetailProductComponent } from './components/detail-product/detail-product.component';
 import { OrderComponent } from './components/order/order.component';
-import { OrderConfirmComponent } from './components/order-confirm/order-confirm.component';
+//import { OrderConfirmComponent } from './components/order-confirm/order-confirm.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor'
-
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -23,14 +23,15 @@ import { TokenInterceptor } from './interceptors/token.interceptor'
     FooterComponent,
     DetailProductComponent,
     OrderComponent,
-    OrderConfirmComponent,
+    // OrderConfirmComponent, 
     LoginComponent,
     RegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [
     {
@@ -41,10 +42,10 @@ import { TokenInterceptor } from './interceptors/token.interceptor'
   ],
   bootstrap: [
     // HomeComponent,
-    //DetailProductComponent,
-    // OrderComponent,
-    //OrderConfirmComponent,
-    LoginComponent,
+    // DetailProductComponent,
+    OrderComponent,
+    // OrderConfirmComponent,
+    // LoginComponent,
     // RegisterComponent
   ]
 })

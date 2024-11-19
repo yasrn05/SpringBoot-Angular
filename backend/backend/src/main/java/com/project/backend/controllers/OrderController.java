@@ -1,97 +1,85 @@
 package com.project.backend.controllers;
 
-import java.util.List;
-
+import com.project.backend.components.LocalizationUtils;
+import com.project.backend.dtos.*;
+import com.project.backend.models.Order;
+import com.project.backend.services.IOrderService;
+import com.project.backend.utils.MessageKeys;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.project.backend.components.LocalizationUtils;
-import com.project.backend.dtos.OrderDTO;
-import com.project.backend.models.Order;
-import com.project.backend.services.OrderService;
-import com.project.backend.utils.MessageKey;
-
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("${api.prefix}/orders")
 @RequiredArgsConstructor
 public class OrderController {
-    private final OrderService orderService;
+    private final IOrderService orderService;
     private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
     public ResponseEntity<?> createOrder(
-            @RequestBody @Valid OrderDTO orderDTO,
+            @Valid @RequestBody OrderDTO orderDTO,
             BindingResult result) {
         try {
             if (result.hasErrors()) {
-                List<String> errorMessage = result.getFieldErrors()
+                List<String> errorMessages = result.getFieldErrors()
                         .stream()
                         .map(FieldError::getDefaultMessage)
                         .toList();
-                return ResponseEntity.badRequest().body(errorMessage);
+                return ResponseEntity.badRequest().body(errorMessages);
             }
             Order orderResponse = orderService.createOrder(orderDTO);
             return ResponseEntity.ok(orderResponse);
-        } catch (Exception error) {
-            return ResponseEntity.badRequest().body(error.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping("/user/{user_id}")
-    // Get http://localhost:8888/api/v1/orders/user/23
-    public ResponseEntity<?> getOrders(
-            @Valid @PathVariable("user_id") Long userId) {
+    @GetMapping("/user/{user_id}") // Thêm biến đường dẫn "user_id"
+    // GET http://localhost:8088/api/v1/orders/user/4
+    public ResponseEntity<?> getOrders(@Valid @PathVariable("user_id") Long userId) {
         try {
             List<Order> orders = orderService.findByUserId(userId);
             return ResponseEntity.ok(orders);
-        } catch (Exception error) {
-            return ResponseEntity.badRequest().body(error.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    // GET http://localhost:8088/api/v1/orders/2
     @GetMapping("/{id}")
-    // Get http://localhost:8888/api/v1/orders/23
-    public ResponseEntity<?> getOrder(
-            @Valid @PathVariable("id") Long orderId) {
+    public ResponseEntity<?> getOrder(@Valid @PathVariable("id") Long orderId) {
         try {
             Order existingOrder = orderService.getOrder(orderId);
             return ResponseEntity.ok(existingOrder);
-        } catch (Exception error) {
-            return ResponseEntity.badRequest().body(error.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PutMapping("/{order_id}")
-    // Put http://localhost:8888/api/v1/orders/1
-    // Người quản trị
-    public ResponseEntity<?> uploadOrder(
-            @Valid @PathVariable("order_id") Long orderId,
+    @PutMapping("/{id}")
+    // PUT http://localhost:8088/api/v1/orders/2
+    // công việc của admin
+    public ResponseEntity<?> updateOrder(
+            @Valid @PathVariable long id,
             @Valid @RequestBody OrderDTO orderDTO) {
+
         try {
-            Order order = orderService.updateOrder(orderId, orderDTO);
+            Order order = orderService.updateOrder(id, orderDTO);
             return ResponseEntity.ok(order);
-        } catch (Exception error) {
-            return ResponseEntity.badRequest().body(error.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{order_id}")
-    public ResponseEntity<?> deleteOrder(
-            @Valid @PathVariable("order_id") Long orderId) {
-        orderService.deletedOrder(orderId);
-        return ResponseEntity
-                .ok(localizationUtils.getLocalizationMessage(MessageKey.DELETE_ORDER_SUCCESSFULLY, orderId));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteOrder(@Valid @PathVariable Long id) {
+        // xóa mềm => cập nhật trường active = false
+        orderService.deleteOrder(id);
+        return ResponseEntity.ok(localizationUtils.getLocalizedMessage(MessageKeys.DELETE_ORDER_SUCCESSFULLY));
     }
 }

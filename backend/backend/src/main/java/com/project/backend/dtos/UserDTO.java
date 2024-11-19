@@ -1,24 +1,24 @@
 package com.project.backend.dtos;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Date;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class UserDTO {
     @JsonProperty("fullname")
     private String fullName;
 
-    @NotBlank(message = "Phone number is required")
     @JsonProperty("phone_number")
+    @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
     private String address;
@@ -38,7 +38,7 @@ public class UserDTO {
     @JsonProperty("google_account_id")
     private int googleAccountId;
 
-    @NotNull(message = "Role id is required")
+    @NotNull(message = "Role ID is required")
     @JsonProperty("role_id")
     private Long roleId;
 }

@@ -1,14 +1,14 @@
 package com.project.backend.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data // Get, set, toString
+@Data // toString
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDTO {
-    @NotEmpty(message = "Category's name can not empty")
+    @NotEmpty(message = "Category's name cannot be empty")
     private String name;
 }

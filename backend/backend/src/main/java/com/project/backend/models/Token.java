@@ -1,28 +1,20 @@
 package com.project.backend.models;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Entity
-@Data
+@Table(name = "tokens")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tokens")
+@Builder
 public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "token", length = 255)
@@ -34,13 +26,11 @@ public class Token {
     @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
 
-    @Column(name = "revoked")
     private boolean revoked;
-
-    @Column(name = "expired")
     private boolean expired;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 }

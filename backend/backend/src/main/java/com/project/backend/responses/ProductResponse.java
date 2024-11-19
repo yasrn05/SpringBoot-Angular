@@ -2,15 +2,10 @@ package com.project.backend.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.backend.models.Product;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,7 +18,7 @@ public class ProductResponse extends BaseResponse {
     @JsonProperty("category_id")
     private Long categoryId;
 
-    public static ProductResponse formProduct(Product product) {
+    public static ProductResponse fromProduct(Product product) {
         ProductResponse productResponse = ProductResponse.builder()
                 .name(product.getName())
                 .price(product.getPrice())
@@ -34,5 +29,5 @@ public class ProductResponse extends BaseResponse {
         productResponse.setCreatedAt(product.getCreatedAt());
         productResponse.setUpdatedAt(product.getUpdatedAt());
         return productResponse;
-    };
+    }
 }

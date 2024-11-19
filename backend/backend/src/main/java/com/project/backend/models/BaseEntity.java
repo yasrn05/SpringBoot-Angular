@@ -1,21 +1,21 @@
 package com.project.backend.models;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import java.time.LocalDateTime;
+
+@Data // toString
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseEntity {
 
+public class BaseEntity {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -32,4 +32,5 @@ public class BaseEntity {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
 }

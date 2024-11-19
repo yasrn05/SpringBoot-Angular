@@ -1,17 +1,23 @@
 package com.project.backend.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.backend.models.Category;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CategoryResponse {
     @JsonProperty("message")
     private String message;
+
+    @JsonProperty("errors")
+    private List<String> errors;
+
+    @JsonProperty("category")
+    private Category category;
 }

@@ -1,17 +1,17 @@
 package com.project.backend.responses;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.util.List;
+
 @AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
+@NoArgsConstructor
 public class ProductListResponse {
-    private int totalPage;
     private List<ProductResponse> products;
+    private int totalPages;
 }

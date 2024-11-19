@@ -1,22 +1,23 @@
 package com.project.backend.dtos;
 
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class OrderDTO {
+
     @JsonProperty("user_id")
-    @Min(value = 1, message = "User's Id must be > 0")
+    @Min(value = 1, message = "User's ID must be > 0")
     private Long userId;
 
     @JsonProperty("fullname")
@@ -26,7 +27,7 @@ public class OrderDTO {
 
     @JsonProperty("phone_number")
     @NotBlank(message = "Phone number is required")
-    @Size(min = 5, message = "Phone number must be at least 5 character")
+    @Size(min = 5, message = "Phone number must be at least 5 characters")
     private String phoneNumber;
 
     private String address;
@@ -48,4 +49,5 @@ public class OrderDTO {
 
     @JsonProperty("payment_method")
     private String paymentMethod;
+
 }

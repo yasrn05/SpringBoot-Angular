@@ -16,8 +16,8 @@ import { Role } from '../../models/role'; // Đường dẫn đến model Role
 export class LoginComponent {
   @ViewChild('loginForm') loginForm!: NgForm;
 
-  phoneNumber: string = '';
-  password: string = '';
+  phoneNumber: string = '0912345678';
+  password: string = '123456';
 
   roles: Role[] = []; // Mảng roles
   rememberMe: boolean = true;
@@ -36,10 +36,15 @@ export class LoginComponent {
 
   ngOnInit() {
     // Gọi API lấy danh sách roles và lưu vào biến roles
+
     this.roleService.getRoles().subscribe({
       next: (roles: Role[]) => { // Sử dụng kiểu Role[]
+
         this.roles = roles;
         this.selectedRole = roles.length > 0 ? roles[1] : undefined;
+      },
+      complete: () => {
+
       },
       error: (error: any) => {
         console.error('Error getting roles:', error);

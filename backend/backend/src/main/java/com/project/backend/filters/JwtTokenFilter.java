@@ -1,9 +1,13 @@
 package com.project.backend.filters;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
+import com.project.backend.components.JwtTokenUtils;
+import com.project.backend.models.User;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,19 +15,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.filter.*;
 
-import com.project.backend.components.JwtTokenUtils;
-import com.project.backend.models.User;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Value("${api.prefix}")
     private String apiPrefix;
@@ -31,14 +31,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenUtils jwtTokenUtil;
 
     @Override
-    protected void doFilterInternal(
-            @SuppressWarnings("null") HttpServletRequest request,
-            @SuppressWarnings("null") HttpServletResponse response,
-            @SuppressWarnings("null") FilterChain filterChain)
+    protected void doFilterInternal(@SuppressWarnings("null") @NonNull HttpServletRequest request,
+            @SuppressWarnings("null") @NonNull HttpServletResponse response,
+            @SuppressWarnings("null") @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            if (isByPassToken(request)) {
-                filterChain.doFilter(request, response);
+            if (isBypassToken(request)) {
+                filterChain.doFilter(request, response); // enable bypass
                 return;
             }
             final String authHeader = request.getHeader("Authorization");
@@ -48,7 +47,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             final String token = authHeader.substring(7);
             final String phoneNumber = jwtTokenUtil.extractPhoneNumber(token);
-            if (phoneNumber != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (phoneNumber != null
+                    && SecurityContextHolder.getContext().getAuthentication() == null) {
                 User userDetails = (User) userDetailsService.loadUserByUsername(phoneNumber);
                 if (jwtTokenUtil.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -59,13 +59,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response); // enable bypass
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         }
+
     }
 
-    private Boolean isByPassToken(HttpServletRequest request) {
+    private boolean isBypassToken(@NonNull HttpServletRequest request) {
+
         final List<Pair<String, String>> bypassTokens = Arrays.asList(
                 Pair.of(String.format("%s/roles", apiPrefix), "GET"),
                 Pair.of(String.format("%s/products", apiPrefix), "GET"),

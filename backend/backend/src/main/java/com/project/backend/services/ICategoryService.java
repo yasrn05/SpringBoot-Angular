@@ -1,9 +1,9 @@
 package com.project.backend.services;
 
-import java.util.List;
-
 import com.project.backend.dtos.CategoryDTO;
 import com.project.backend.models.Category;
+
+import java.util.List;
 
 public interface ICategoryService {
     Category createCategory(CategoryDTO category);
