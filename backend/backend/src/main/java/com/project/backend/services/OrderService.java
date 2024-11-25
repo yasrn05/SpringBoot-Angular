@@ -1,11 +1,12 @@
 package com.project.backend.services;
 
+import com.project.backend.dtos.CartItemDTO;
 import com.project.backend.dtos.OrderDTO;
 import com.project.backend.exceptions.DataNotFoundException;
-import com.project.backend.models.Order;
-import com.project.backend.models.OrderStatus;
-import com.project.backend.models.User;
+import com.project.backend.models.*;
+import com.project.backend.repositories.OrderDetailRepository;
 import com.project.backend.repositories.OrderRepository;
+import com.project.backend.repositories.ProductRepository;
 import com.project.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,14 +14,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService implements IOrderService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+    private final OrderDetailRepository orderDetailRepository;
+
     private final ModelMapper modelMapper;
 
     @Override
@@ -49,8 +52,36 @@ public class OrderService implements IOrderService {
             throw new DataNotFoundException("Date must be at least today !");
         }
         order.setShippingDate(shippingDate);
-        order.setActive(true);
+        order.setActive(true);// đoạn này nên set sẵn trong sql
+        order.setTotalMoney(orderDTO.getTotalMoney());
         orderRepository.save(order);
+        // Tạo danh sách các đối tượng OrderDetail từ cartItems
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (CartItemDTO cartItemDTO : orderDTO.getCartItems()) {
+            // Tạo một đối tượng OrderDetail từ CartItemDTO
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrder(order);
+
+            // Lấy thông tin sản phẩm từ cartItemDTO
+            Long productId = cartItemDTO.getProductId();
+            int quantity = cartItemDTO.getQuantity();
+
+            // Tìm thông tin sản phẩm từ cơ sở dữ liệu (hoặc sử dụng cache nếu cần)
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new DataNotFoundException("Product not found with id: " + productId));
+
+            // Đặt thông tin cho OrderDetail
+            orderDetail.setProduct(product);
+            orderDetail.setNumberOfProducts(quantity);
+            // Các trường khác của OrderDetail nếu cần
+            orderDetail.setPrice(product.getPrice());
+
+            // Thêm OrderDetail vào danh sách
+            orderDetails.add(orderDetail);
+        }
+
+        // Lưu danh sách OrderDetail vào cơ sở dữ liệu
+        orderDetailRepository.saveAll(orderDetails);
         return order;
     }
 
