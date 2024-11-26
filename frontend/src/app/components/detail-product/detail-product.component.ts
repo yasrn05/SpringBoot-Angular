@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../../models/product';
 import { ProductImage } from 'src/app/models/product.image';
 import { environment } from 'src/app/environments/environment';
@@ -24,16 +23,16 @@ export class DetailProductComponent implements OnInit {
     private cartService: CartService,
     // private categoryService: CategoryService,
     // private router: Router,
-    // private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
   ) {
 
   }
   ngOnInit() {
     // Lấy productId từ URL      
-    //const idParam = this.activatedRoute.snapshot.paramMap.get('id');
-
+    const idParam = this.activatedRoute.snapshot.paramMap.get('id');
     //this.cartService.clearCart();
-    const idParam = 9 //fake tạm 1 giá trị
+    //const idParam = 9 //fake tạm 1 giá trị
     if (idParam !== null) {
       this.productId = +idParam;
     }
@@ -41,13 +40,11 @@ export class DetailProductComponent implements OnInit {
       this.productService.getDetailProduct(this.productId).subscribe({
         next: (response: any) => {
           // Lấy danh sách ảnh sản phẩm và thay đổi URL
-
           if (response.product_images && response.product_images.length > 0) {
             response.product_images.forEach((product_image: ProductImage) => {
               product_image.image_url = `${environment.apiBaseUrl}/products/images/${product_image.image_url}`;
             });
           }
-
           this.product = response
           // Bắt đầu với ảnh đầu tiên
           this.showImage(0);
@@ -77,21 +74,17 @@ export class DetailProductComponent implements OnInit {
     }
   }
   thumbnailClick(index: number) {
-
     // Gọi khi một thumbnail được bấm
     this.currentImageIndex = index; // Cập nhật currentImageIndex
   }
   nextImage(): void {
-
     this.showImage(this.currentImageIndex + 1);
   }
 
   previousImage(): void {
-
     this.showImage(this.currentImageIndex - 1);
   }
   addToCart(): void {
-
     if (this.product) {
       this.cartService.addToCart(this.product.id, this.quantity);
     } else {
@@ -111,6 +104,6 @@ export class DetailProductComponent implements OnInit {
   }
 
   buyNow(): void {
-    // Thực hiện xử lý khi người dùng muốn mua ngay
+    this.router.navigate(['/orders']);
   }
 }

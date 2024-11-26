@@ -29,7 +29,6 @@ export class RegisterComponent {
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
     //inject
-
   }
   onPhoneNumberChange() {
     console.log(`Phone typed: ${this.phoneNumber}`)
@@ -44,8 +43,6 @@ export class RegisterComponent {
       `isAccepted: ${this.isAccepted}` +
       `dateOfBirth: ${this.dateOfBirth}`;
     //alert(message);
-
-
     const registerDTO: RegisterDTO = {
       "fullname": this.fullName,
       "phone_number": this.phoneNumber,
@@ -88,7 +85,6 @@ export class RegisterComponent {
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-
       if (age < 18) {
         this.registerForm.form.controls['dateOfBirth'].setErrors({ 'invalidAge': true });
       } else {
